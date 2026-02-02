@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | Sweet Heaven | Artisanal Patisserie & Bespoke Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/cupcake.png">
+    
+    <!-- Flag icons CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+
+    <style>
+        :root {
+            --pink-bg: #fff5f7;
+            --accent-pink: #ff8fa3;
+            --gold: #c5a47e;
+            --dark-choco: #2d1b1b;
+            --white: #ffffff;
+            --light-gray: #f9f9f9;
+            --success-green: #4CAF50;
+            --error-red: #f44336;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--pink-bg); 
+            color: var(--dark-choco); 
+            scroll-behavior: smooth; 
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 245, 247, 0.95); backdrop-filter: blur(10px); z-index: 1000;
+        }
+        .logo { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: var(--dark-choco); 
+            white-space: nowrap;
+        }
+        .logo span { color: var(--accent-pink); }
+        .nav-links { 
+            display: flex; 
+            gap: 30px; 
+            list-style: none; 
+        }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--dark-choco); 
+            font-size: 0.75rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* NAVBAR HOVER PINK */
+        .nav-links a:hover { color: var(--accent-pink); }
+
+        /* Mobile menu toggle */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-choco);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 15px 0;
+            z-index: 1001;
+        }
+        .dropdown-menu li {
+            list-style: none;
+        }
+        .dropdown-menu a {
+            padding: 10px 20px;
+            display: block;
+            color: var(--dark-choco);
+            font-size: 0.8rem;
+            text-transform: none;
+            font-weight: 400;
+        }
+        .dropdown-menu a:hover {
+            background: var(--pink-bg);
+            color: var(--accent-pink);
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* --- HERO BANNER --- */
+        .page-hero { 
+            height: 50vh; 
+            position: relative; 
+            overflow: hidden; 
+            margin-top: 65px; 
+            background: linear-gradient(rgba(45, 27, 27, 0.7), rgba(45, 27, 27, 0.7)), url('images/pexels-photo-169191.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        .page-hero-content h1 {
+            font-family: 'Cormorant Garamond';
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .page-hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* --- EVENTS CONTENT --- */
+        .events-section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond';
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--dark-choco);
+        }
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        .event-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .event-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .event-content {
+            padding: 30px;
+        }
+        .event-title {
+            font-family: 'Cormorant Garamond';
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark-choco);
+        }
+        .event-price {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .event-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        .event-features li {
+            padding: 5px 0;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .event-features li i {
+            color: var(--accent-pink);
+        }
+        .btn-action { 
+            width: 100%; 
+            padding: 14px; 
+            background: var(--accent-pink); 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .btn-action:hover {
+            background: #ff7a93;
+            transform: translateY(-2px);
+        }
+
+        /* Process Section */
+        .process-section {
+            background: var(--white);
+            padding: 60px 5%;
+            border-radius: 30px;
+            margin-bottom: 80px;
+        }
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .process-step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--pink-bg);
+            border-radius: 20px;
+        }
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-pink);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        .step-title {
+            font-family: 'Cormorant Garamond';
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Inquiry Form with Validation */
+        .inquiry-form {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-choco);
+        }
+        
+        .input-container {
+            position: relative;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Montserrat';
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* Date input specific styles */
+        input[type="date"] {
+            padding-right: 40px; /* Space for calendar icon */
+        }
+        
+        /* Calendar icon for date input */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+        }
+        
+        /* Custom calendar icon */
+        .date-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            pointer-events: none; /* Let click go through to the actual calendar picker */
+            z-index: 2;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 2px rgba(255, 143, 163, 0.2);
+        }
+        
+        .form-group input.valid,
+        .form-group select.valid,
+        .form-group textarea.valid {
+            border-color: var(--success-green);
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+        
+        .form-group input.invalid,
+        .form-group select.invalid,
+        .form-group textarea.invalid {
+            border-color: var(--error-red);
+            background-color: rgba(244, 67, 54, 0.05);
+        }
+        
+        .validation-icon {
+            position: absolute;
+            right: 45px; /* Move validation icons left to make space for calendar icon */
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 3;
+        }
+        
+        .valid .validation-icon.valid-icon {
+            opacity: 1;
+            color: var(--success-green);
+        }
+        
+        .invalid .validation-icon.invalid-icon {
+            opacity: 1;
+            color: var(--error-red);
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .error-message {
+            color: var(--error-red);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.invalid .error-message {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Phone input with country code */
+        .phone-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .country-code-container {
+            position: relative;
+            width: 140px;
+            flex-shrink: 0;
+        }
+        
+        .country-code-select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Montserrat';
+            font-size: 1rem;
+            background-color: white;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+        
+        .country-flag {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+        
+        .phone-number-input {
+            flex: 1;
+        }
+        
+        .phone-number-input input {
+            padding-left: 15px;
+        }
+        
+        .country-code-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+        }
+        
+        .country-code-option .flag-icon {
+            width: 20px;
+            height: 15px;
+            display: inline-block;
+            background-size: cover;
+            border-radius: 2px;
+        }
+        
+        /* Phone format helper */
+        .phone-format-hint {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .phone-format-hint.show {
+            display: block;
+        }
+
+        /* --- TOAST MESSAGE --- */
+        #toast { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: var(--dark-choco); 
+            color: white; 
+            padding: 12px 30px; 
+            border-radius: 50px; 
+            display: none; 
+            z-index: 5000; 
+            font-weight: 600; 
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark-choco);
+            color: white;
+            padding: 60px 5% 30px;
+            margin-top: auto;
+        }
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        .footer-section h3 {
+            font-family: 'Cormorant Garamond';
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .footer-section a:hover {
+            color: var(--accent-pink);
+        }
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .social-icons a:hover {
+            background: var(--accent-pink);
+            transform: translateY(-3px);
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .page-hero-content h1 {
+                font-size: 3rem;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--pink-bg);
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                gap: 20px;
+                z-index: 999;
+                overflow-y: auto;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+                position: relative;
+                z-index: 1000;
+            }
+            .page-hero {
+                height: 40vh;
+            }
+            .page-hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .inquiry-form {
+                padding: 30px;
+            }
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                display: none;
+                padding-left: 20px;
+                background: rgba(255,255,255,0.5);
+                margin-top: 10px;
+            }
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            .dropdown > a .fa-chevron-down {
+                transition: transform 0.3s;
+            }
+            .dropdown.active > a .fa-chevron-down {
+                transform: rotate(180deg);
+            }
+            .phone-input-container {
+                flex-direction: column;
+            }
+            .country-code-container {
+                width: 100%;
+            }
+            /* Adjust validation icon position on mobile */
+            .validation-icon {
+                right: 15px;
+            }
+            .date-icon {
+                display: none;
+            }
+            input[type="date"] {
+                padding-right: 15px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .page-hero-content h1 {
+                font-size: 2rem;
+            }
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            .page-hero {
+                height: 35vh;
+            }
+            .page-hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .event-content {
+                padding: 20px;
+            }
+            .inquiry-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">SWEET<span>HEAVEN</span></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="catagory.html">COLLECTION</a></li>
+            <li><a href="gifthampers.html">GIFT HAMPERS</a></li>
+            
+            <li class="dropdown">
+                <a href="#">ABOUT <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="aboutus.html">Our Story</a></li>
+                    <li><a href="ourteam.html">Our Team</a></li>
+                    <li><a href="ourvalues.html">Our Values</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#">SUPPORT <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="customer-care.html">Customer Care</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#" class="active">SERVICES <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="events.html" class="active">Events</a></li>
+                    <li><a href="catering.html">Catering</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <div class="page-hero-content">
+            <h1>Sweet Heaven Events</h1>
+            <p>Transform your special moments into unforgettable celebrations with our bespoke event services</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="events-section">
+            <h2 class="section-title">Event Packages</h2>
+            <div class="events-grid">
+                <div class="event-card">
+                    <img src="images/pexels-photo-169191.jpg" alt="Wedding Events" class="event-img" width="800" height="600">
+                    <div class="event-content">
+                        <h3 class="event-title">Wedding Celebrations</h3>
+                        <span class="event-price">Starting from $800</span>
+                        <ul class="event-features">
+                            <li><i class="fas fa-check"></i> Custom wedding cake design</li>
+                            <li><i class="fas fa-check"></i> Dessert table setup</li>
+                            <li><i class="fas fa-check"></i> Cake tasting session</li>
+                            <li><i class="fas fa-check"></i> Day-of setup & delivery</li>
+                            <li><i class="fas fa-check"></i> Up to 150 guests</li>
+                        </ul>
+                        <button class="btn-action" onclick="inquiryEvent('Wedding Celebrations')">Inquire Now</button>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <img src="images/pexels-photo-2531188.jpg" alt="Corporate Events" class="event-img" width="800" height="600">
+                    <div class="event-content">
+                        <h3 class="event-title">Corporate Events</h3>
+                        <span class="event-price">Starting from $500</span>
+                        <ul class="event-features">
+                            <li><i class="fas fa-check"></i> Branded dessert displays</li>
+                            <li><i class="fas fa-check"></i> Custom cookie favors</li>
+                            <li><i class="fas fa-check"></i> Coffee & pastry station</li>
+                            <li><i class="fas fa-check"></i> Setup & breakdown service</li>
+                            <li><i class="fas fa-check"></i> Up to 100 attendees</li>
+                        </ul>
+                        <button class="btn-action" onclick="inquiryEvent('Corporate Events')">Inquire Now</button>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <img src="images/birthday celebration.jpg" alt="Birthday Parties" class="event-img" width="800" height="600">
+                    <div class="event-content">
+                        <h3 class="event-title">Birthday Celebrations</h3>
+                        <span class="event-price">Starting from $300</span>
+                        <ul class="event-features">
+                            <li><i class="fas fa-check"></i> Themed birthday cakes</li>
+                            <li><i class="fas fa-check"></i> Cupcake towers</li>
+                            <li><i class="fas fa-check"></i> Custom dessert boxes</li>
+                            <li><i class="fas fa-check"></i> Party favors included</li>
+                            <li><i class="fas fa-check"></i> Up to 50 guests</li>
+                        </ul>
+                        <button class="btn-action" onclick="inquiryEvent('Birthday Celebrations')">Inquire Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="process-section">
+                <h2 class="section-title">Our Event Process</h2>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Consultation</h3>
+                        <p>Discuss your vision, theme, and requirements with our event specialists.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Customization</h3>
+                        <p>We design a personalized menu and presentation that matches your event.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Tasting Session</h3>
+                        <p>Sample our creations and finalize flavors, designs, and details.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">Execution</h3>
+                        <p>We handle setup, presentation, and ensure everything runs smoothly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Request Event Information</h2>
+            <div class="inquiry-form">
+                <form id="eventInquiryForm" onsubmit="submitEventInquiry(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <div class="input-container">
+                                <input type="text" id="name" name="name" required 
+                                       oninput="validateName(this)" 
+                                       onkeypress="preventNumbers(event)"
+                                       onblur="validateName(this)"
+                                       placeholder="Enter your full name">
+                                <span class="validation-icon valid-icon"><i class="fas fa-check"></i></span>
+                                <span class="validation-icon invalid-icon"><i class="fas fa-times"></i></span>
+                            </div>
+                            <div class="error-message" id="name-error">Name must contain only letters and spaces (2-50 characters)</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <div class="input-container">
+                                <input type="email" id="email" name="email" required 
+                                       oninput="validateEmail()" 
+                                       onblur="validateEmail()"
+                                       placeholder="example@email.com">
+                                <span class="validation-icon valid-icon"><i class="fas fa-check"></i></span>
+                                <span class="validation-icon invalid-icon"><i class="fas fa-times"></i></span>
+                            </div>
+                            <div class="error-message" id="email-error">Please enter a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <div class="phone-input-container">
+                                <div class="country-code-container">
+                                    <select id="country-code" class="country-code-select" onchange="updatePhoneValidation()">
+                                        <!-- Country codes will be populated by JavaScript -->
+                                    </select>
+                                    <span id="country-flag" class="country-flag">🇵🇰</span>
+                                </div>
+                                <div class="phone-number-input input-container">
+                                    <input type="tel" id="phone" name="phone" required 
+                                           oninput="validatePhone(this)" 
+                                           onkeypress="preventLetters(event)"
+                                           onblur="validatePhone(this)"
+                                           placeholder="03XX XXXXXXX">
+                                    <span class="validation-icon valid-icon"><i class="fas fa-check"></i></span>
+                                    <span class="validation-icon invalid-icon"><i class="fas fa-times"></i></span>
+                                </div>
+                            </div>
+                            <div class="error-message" id="phone-error">Phone must be 10-15 digits</div>
+                            <div class="phone-format-hint" id="phone-format-hint">Format: 03XX XXXXXXX</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-type">Event Type *</label>
+                            <div class="input-container">
+                                <select id="event-type" name="event-type" required 
+                                        onchange="validateEventType()"
+                                        onblur="validateEventType()">
+                                    <option value="">Select Event Type</option>
+                                    <option value="wedding">Wedding</option>
+                                    <option value="corporate">Corporate Event</option>
+                                    <option value="birthday">Birthday Party</option>
+                                    <option value="baby-shower">Baby Shower</option>
+                                    <option value="anniversary">Anniversary</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <span class="validation-icon valid-icon"><i class="fas fa-check"></i></span>
+                                <span class="validation-icon invalid-icon"><i class="fas fa-times"></i></span>
+                            </div>
+                            <div class="error-message" id="event-type-error">Please select an event type</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="event-date">Event Date *</label>
+                            <div class="input-container">
+                                <input type="date" id="event-date" name="event-date" required 
+                                       onchange="validateEventDate()"
+                                       onblur="validateEventDate()">
+                                <span class="validation-icon valid-icon"><i class="fas fa-check"></i></span>
+                                <span class="validation-icon invalid-icon"><i class="fas fa-times"></i></span>
+                                <span class="date-icon"><i class="far fa-calendar-alt"></i></span>
+                            </div>
+                            <div class="error-message" id="event-date-error">Please select a future date</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Number of Guests *</label>
+                            <div class="input-container">
+                                <select id="guests" name="guests" required 
+                                        onchange="validateGuests()"
+                                        onblur="validateGuests()">
+                                    <option value="">Select Number</option>
+                                    <option value="1-50">1-50</option>
+                                    <option value="51-100">51-100</option>
+                                    <option value="101-150">101-150</option>
+                                    <option value="151-200">151-200</option>
+                                    <option value="200+">200+</option>
+                                </select>
+                                <span class="validation-icon valid-icon"><i class="fas fa-check"></i></span>
+                                <span class="validation-icon invalid-icon"><i class="fas fa-times"></i></span>
+                            </div>
+                            <div class="error-message" id="guests-error">Please select number of guests</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Event Details & Special Requests</label>
+                        <div class="input-container">
+                            <textarea id="message" name="message" 
+                                      oninput="validateMessage()"
+                                      onblur="validateMessage()"
+                                      placeholder="Tell us about your event theme, dietary requirements, and any special requests..."></textarea>
+                            <span class="validation-icon valid-icon"><i class="fas fa-check"></i></span>
+                            <span class="validation-icon invalid-icon"><i class="fas fa-times"></i></span>
+                        </div>
+                        <div class="error-message" id="message-error">Please provide event details (minimum 10 characters)</div>
+                    </div>
+                    <button type="submit" class="btn-action" id="submit-btn">Submit Inquiry</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast">Event inquiry submitted! We will contact you within 24 hours.</div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Sweet Heaven</h3>
+                <p>Artisanal patisserie and bespoke cake lab crafting heavenly desserts since 2010.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Visit Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Patisserie Avenue</p>
+                <p>Sweet District, Paris 75001</p>
+                <p><i class="fas fa-clock"></i> Mon-Sat: 8AM-8PM</p>
+                <p>Sun: 9AM-6PM</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> hello@sweetheaven.com</p>
+                <p><i class="fas fa-truck"></i> Delivery within 5km radius</p>
+                <p>Catering & events available</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Events Hotline</h3>
+                <p>For event inquiries and bookings:</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 987-6543</p>
+                <p><i class="fas fa-envelope"></i> events@sweetheaven.com</p>
+                <p>Bookings available 3+ months in advance</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2026 Sweet Heaven Patisserie. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Country codes with flags, names, and phone validation patterns
+        const countryCodes = [
+            { 
+                code: '+92', 
+                flag: '🇵🇰', 
+                name: 'Pakistan', 
+                countryCode: 'pk',
+                pattern: /^(03[0-9]{9}|[0-9]{10})$/,
+                placeholder: '03XX XXXXXXX',
+                hint: 'Mobile: 03XX XXXXXXX (11 digits)',
+                example: '03001234567',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    if (cleaned.length === 11 && cleaned.startsWith('03')) return true;
+                    if (cleaned.length === 10) return true; // Alternative format
+                    return false;
+                }
+            },
+            { 
+                code: '+1', 
+                flag: '🇺🇸', 
+                name: 'United States', 
+                countryCode: 'us',
+                pattern: /^\(?([2-9][0-9]{2})\)?[-.\s]?([2-9][0-9]{2})[-.\s]?([0-9]{4})$/,
+                placeholder: '(XXX) XXX-XXXX',
+                hint: 'Format: (XXX) XXX-XXXX (10 digits)',
+                example: '1234567890',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 10 && !cleaned.match(/^[01]/);
+                }
+            },
+            { 
+                code: '+44', 
+                flag: '🇬🇧', 
+                name: 'United Kingdom', 
+                countryCode: 'gb',
+                pattern: /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3,4}$/,
+                placeholder: '07XXX XXXXXX',
+                hint: 'Mobile: 07XXX XXXXXX (11 digits)',
+                example: '07123456789',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 11 && cleaned.startsWith('07');
+                }
+            },
+            { 
+                code: '+91', 
+                flag: '🇮🇳', 
+                name: 'India', 
+                countryCode: 'in',
+                pattern: /^[6-9][0-9]{9}$/,
+                placeholder: '9XXXXXXXXX',
+                hint: 'Mobile: 9XXXXXXXXX (10 digits, starts with 6-9)',
+                example: '9876543210',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 10 && cleaned.match(/^[6-9]/);
+                }
+            },
+            { 
+                code: '+971', 
+                flag: '🇦🇪', 
+                name: 'UAE', 
+                countryCode: 'ae',
+                pattern: /^(05[0-9]{8}|[0-9]{9})$/,
+                placeholder: '05X XXXXXXX',
+                hint: 'Mobile: 05X XXXXXXX (10 digits)',
+                example: '0501234567',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 10 && cleaned.startsWith('05');
+                }
+            },
+            { 
+                code: '+966', 
+                flag: '🇸🇦', 
+                name: 'Saudi Arabia', 
+                countryCode: 'sa',
+                pattern: /^(05[0-9]{8})$/,
+                placeholder: '05X XXXXXXX',
+                hint: 'Mobile: 05X XXXXXXX (10 digits)',
+                example: '0501234567',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 10 && cleaned.startsWith('05');
+                }
+            },
+            { 
+                code: '+20', 
+                flag: '🇪🇬', 
+                name: 'Egypt', 
+                countryCode: 'eg',
+                pattern: /^(01[0-9]{9})$/,
+                placeholder: '01X XXXXXXX',
+                hint: 'Mobile: 01X XXXXXXX (11 digits)',
+                example: '01012345678',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 11 && cleaned.startsWith('01');
+                }
+            },
+            { 
+                code: '+27', 
+                flag: '🇿🇦', 
+                name: 'South Africa', 
+                countryCode: 'za',
+                pattern: /^(07[0-9]{8})$/,
+                placeholder: '07X XXXXXXX',
+                hint: 'Mobile: 07X XXXXXXX (10 digits)',
+                example: '0712345678',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 10 && cleaned.startsWith('07');
+                }
+            },
+            { 
+                code: '+61', 
+                flag: '🇦🇺', 
+                name: 'Australia', 
+                countryCode: 'au',
+                pattern: /^(04[0-9]{8})$/,
+                placeholder: '04XX XXX XXX',
+                hint: 'Mobile: 04XX XXX XXX (10 digits)',
+                example: '0412345678',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 10 && cleaned.startsWith('04');
+                }
+            },
+            { 
+                code: '+49', 
+                flag: '🇩🇪', 
+                name: 'Germany', 
+                countryCode: 'de',
+                pattern: /^(01[5-7][0-9]{8}|015[0-9]{8})$/,
+                placeholder: '015X XXXXXXX',
+                hint: 'Mobile: 015X XXXXXXX (11 digits)',
+                example: '01512345678',
+                validation: (num) => {
+                    const cleaned = num.replace(/\D/g, '');
+                    return cleaned.length === 11 && cleaned.startsWith('015') || cleaned.startsWith('016') || cleaned.startsWith('017');
+                }
+            },
+            // More countries with generic validation
+            { code: '+93', flag: '🇦🇫', name: 'Afghanistan', countryCode: 'af', pattern: /^[0-9]{9}$/, placeholder: '7X XXXXXXX', hint: '9-10 digits', example: '701234567' },
+            { code: '+64', flag: '🇳🇿', name: 'New Zealand', countryCode: 'nz', pattern: /^[0-9]{9,10}$/, placeholder: '2X XXX XXXX', hint: '9-10 digits', example: '212345678' },
+            { code: '+33', flag: '🇫🇷', name: 'France', countryCode: 'fr', pattern: /^[0-9]{9}$/, placeholder: '6X XX XX XX', hint: '9 digits', example: '612345678' },
+            { code: '+39', flag: '🇮🇹', name: 'Italy', countryCode: 'it', pattern: /^[0-9]{9,10}$/, placeholder: '3XX XXX XXXX', hint: '9-10 digits', example: '3123456789' },
+            { code: '+34', flag: '🇪🇸', name: 'Spain', countryCode: 'es', pattern: /^[0-9]{9}$/, placeholder: '6XX XXX XXX', hint: '9 digits', example: '612345678' },
+            { code: '+55', flag: '🇧🇷', name: 'Brazil', countryCode: 'br', pattern: /^[0-9]{10,11}$/, placeholder: '11 XXXXX-XXXX', hint: '10-11 digits', example: '11912345678' },
+            { code: '+86', flag: '🇨🇳', name: 'China', countryCode: 'cn', pattern: /^1[3-9][0-9]{9}$/, placeholder: '1XX XXXX XXXX', hint: '11 digits, starts with 1', example: '13812345678' },
+            { code: '+81', flag: '🇯🇵', name: 'Japan', countryCode: 'jp', pattern: /^[0-9]{10,11}$/, placeholder: '90 XXXX XXXX', hint: '10-11 digits', example: '9012345678' },
+            { code: '+82', flag: '🇰🇷', name: 'South Korea', countryCode: 'kr', pattern: /^01[0-9]{8,9}$/, placeholder: '010 XXXX XXXX', hint: '10-11 digits', example: '01012345678' },
+            { code: '+7', flag: '🇷🇺', name: 'Russia', countryCode: 'ru', pattern: /^[0-9]{10}$/, placeholder: '9XX XXX-XX-XX', hint: '10 digits', example: '9123456789' },
+            { code: '+65', flag: '🇸🇬', name: 'Singapore', countryCode: 'sg', pattern: /^[89][0-9]{7}$/, placeholder: '9XXXXXXX', hint: '8 digits, starts with 8 or 9', example: '91234567' },
+            { code: '+60', flag: '🇲🇾', name: 'Malaysia', countryCode: 'my', pattern: /^01[0-9]{8,9}$/, placeholder: '01X XXXXXXX', hint: '10-11 digits', example: '0123456789' },
+            { code: '+63', flag: '🇵🇭', name: 'Philippines', countryCode: 'ph', pattern: /^[89][0-9]{9}$/, placeholder: '9XX XXX XXXX', hint: '10 digits, starts with 8 or 9', example: '9123456789' },
+            { code: '+62', flag: '🇮🇩', name: 'Indonesia', countryCode: 'id', pattern: /^[89][0-9]{9,11}$/, placeholder: '8XX XXXX XXXX', hint: '10-12 digits', example: '81234567890' },
+            { code: '+90', flag: '🇹🇷', name: 'Turkey', countryCode: 'tr', pattern: /^5[0-9]{9}$/, placeholder: '5XX XXX XX XX', hint: '10 digits, starts with 5', example: '5321234567' },
+            { code: '+98', flag: '🇮🇷', name: 'Iran', countryCode: 'ir', pattern: /^09[0-9]{9}$/, placeholder: '09XX XXX XXXX', hint: '11 digits, starts with 09', example: '09123456789' },
+            { code: '+974', flag: '🇶🇦', name: 'Qatar', countryCode: 'qa', pattern: /^[0-9]{8}$/, placeholder: '33XXXXXX', hint: '8 digits', example: '33123456' },
+            { code: '+973', flag: '🇧🇭', name: 'Bahrain', countryCode: 'bh', pattern: /^[0-9]{8}$/, placeholder: '36XXXXXX', hint: '8 digits', example: '36123456' },
+            { code: '+968', flag: '🇴🇲', name: 'Oman', countryCode: 'om', pattern: /^[0-9]{8}$/, placeholder: '9X XXXXXX', hint: '8 digits', example: '92123456' },
+            { code: '+965', flag: '🇰🇼', name: 'Kuwait', countryCode: 'kw', pattern: /^[569][0-9]{7}$/, placeholder: '5XXXXXXX', hint: '8 digits', example: '51234567' }
+        ];
+
+        // Initialize country code dropdown
+        function initCountryCodeDropdown() {
+            const countryCodeSelect = document.getElementById('country-code');
+            const countryFlag = document.getElementById('country-flag');
+            const phoneInput = document.getElementById('phone');
+            const phoneHint = document.getElementById('phone-format-hint');
+            
+            // Clear existing options
+            countryCodeSelect.innerHTML = '';
+            
+            // Add countries to dropdown
+            countryCodes.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.textContent = `${country.flag} ${country.code} (${country.name})`;
+                option.setAttribute('data-flag', country.flag);
+                option.setAttribute('data-country', country.countryCode);
+                countryCodeSelect.appendChild(option);
+            });
+            
+            // Set default to Pakistan
+            const defaultCountry = countryCodes.find(c => c.code === '+92');
+            if (defaultCountry) {
+                countryCodeSelect.value = defaultCountry.code;
+                countryFlag.textContent = defaultCountry.flag;
+                phoneInput.placeholder = defaultCountry.placeholder;
+                phoneHint.textContent = defaultCountry.hint;
+                phoneHint.classList.add('show');
+            }
+            
+            // Update flag and placeholder when country changes
+            countryCodeSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const flag = selectedOption.getAttribute('data-flag');
+                const countryCode = selectedOption.getAttribute('data-country');
+                const selectedCountry = countryCodes.find(c => c.countryCode === countryCode);
+                
+                countryFlag.textContent = flag;
+                if (selectedCountry) {
+                    phoneInput.placeholder = selectedCountry.placeholder;
+                    phoneHint.textContent = selectedCountry.hint;
+                    phoneHint.classList.add('show');
+                }
+                updatePhoneValidation();
+            });
+        }
+
+        // Input restriction functions
+        function preventNumbers(event) {
+            const key = event.key;
+            // Allow only letters, spaces, and control keys
+            if (!/^[A-Za-z\s]$/.test(key) && 
+                !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) {
+                event.preventDefault();
+                return false;
+            }
+        }
+
+        function preventLetters(event) {
+            const key = event.key;
+            const phoneInput = document.getElementById('phone');
+            const countryCode = document.getElementById('country-code').value;
+            const selectedCountry = countryCodes.find(c => c.code === countryCode);
+            
+            // For Pakistan, allow only numbers and '0', '3' at start
+            if (countryCode === '+92') {
+                const currentValue = phoneInput.value + key;
+                if (currentValue.length === 1 && key !== '0' && key !== '3') {
+                    event.preventDefault();
+                    return false;
+                }
+                if (currentValue.length === 2 && currentValue[0] === '0' && key !== '3') {
+                    event.preventDefault();
+                    return false;
+                }
+            }
+            
+            // Allow only numbers and control keys, and formatting characters
+            if (!/^[0-9]$/.test(key) && 
+                !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ', '-', '(', ')'].includes(key)) {
+                event.preventDefault();
+                return false;
+            }
+        }
+
+        // Validation functions
+        function validateName(inputElement) {
+            const nameInput = inputElement || document.getElementById('name');
+            const nameError = document.getElementById('name-error');
+            let value = nameInput.value.trim();
+            
+            // Remove any numbers that might have been pasted
+            value = value.replace(/[0-9]/g, '');
+            nameInput.value = value;
+            
+            // Name validation: letters and spaces only, 2-50 characters
+            const nameRegex = /^[A-Za-z\s]{2,50}$/;
+            const isValid = nameRegex.test(value);
+            
+            updateValidationState(nameInput, isValid, nameError);
+            return isValid;
+        }
+        
+        function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('email-error');
+            const value = emailInput.value.trim();
+            
+            // Email validation regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isValid = emailRegex.test(value);
+            
+            updateValidationState(emailInput, isValid, emailError);
+            return isValid;
+        }
+        
+        function validatePhone(inputElement) {
+            const phoneInput = inputElement || document.getElementById('phone');
+            const phoneError = document.getElementById('phone-error');
+            const countryCode = document.getElementById('country-code').value;
+            const selectedCountry = countryCodes.find(c => c.code === countryCode);
+            let value = phoneInput.value.trim();
+            
+            if (!selectedCountry) {
+                // Generic validation if country not found
+                const cleanedValue = value.replace(/\D/g, '');
+                const isValid = cleanedValue.length >= 10 && cleanedValue.length <= 15;
+                updateValidationState(phoneInput, isValid, phoneError);
+                return isValid;
+            }
+            
+            // Use country-specific validation
+            const isValid = selectedCountry.validation ? 
+                selectedCountry.validation(value) : 
+                selectedCountry.pattern.test(value.replace(/\D/g, ''));
+            
+            phoneError.textContent = selectedCountry.hint || 'Invalid phone number format';
+            updateValidationState(phoneInput, isValid, phoneError);
+            return isValid;
+        }
+        
+        function updatePhoneValidation() {
+            validatePhone();
+        }
+        
+        function validateEventType() {
+            const eventTypeInput = document.getElementById('event-type');
+            const eventTypeError = document.getElementById('event-type-error');
+            const value = eventTypeInput.value;
+            const isValid = value !== '';
+            
+            updateValidationState(eventTypeInput, isValid, eventTypeError);
+            return isValid;
+        }
+        
+        function validateEventDate() {
+            const eventDateInput = document.getElementById('event-date');
+            const eventDateError = document.getElementById('event-date-error');
+            const selectedDate = new Date(eventDateInput.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const isValid = selectedDate >= today;
+            
+            updateValidationState(eventDateInput, isValid, eventDateError);
+            return isValid;
+        }
+        
+        function validateGuests() {
+            const guestsInput = document.getElementById('guests');
+            const guestsError = document.getElementById('guests-error');
+            const value = guestsInput.value;
+            const isValid = value !== '';
+            
+            updateValidationState(guestsInput, isValid, guestsError);
+            return isValid;
+        }
+        
+        function validateMessage() {
+            const messageInput = document.getElementById('message');
+            const messageError = document.getElementById('message-error');
+            const value = messageInput.value.trim();
+            
+            const isValid = value.length >= 10;
+            
+            updateValidationState(messageInput, isValid, messageError);
+            return isValid;
+        }
+        
+        function updateValidationState(inputElement, isValid, errorElement) {
+            const formGroup = inputElement.closest('.form-group');
+            const value = inputElement.value.trim();
+            
+            // Clear all validation classes first
+            formGroup.classList.remove('valid', 'invalid');
+            inputElement.classList.remove('valid', 'invalid');
+            errorElement.style.display = 'none';
+            
+            // If field is empty and not required, don't show any validation
+            if (value === '' && !inputElement.hasAttribute('required')) {
+                return;
+            }
+            
+            // If field is empty but required, only show error if it's a select field that wasn't selected
+            if (value === '' && inputElement.hasAttribute('required')) {
+                if (inputElement.tagName === 'SELECT' && inputElement.value === '') {
+                    formGroup.classList.add('invalid');
+                    inputElement.classList.add('invalid');
+                    errorElement.style.display = 'block';
+                }
+                return;
+            }
+            
+            // Show validation based on isValid
+            if (isValid) {
+                formGroup.classList.add('valid');
+                inputElement.classList.add('valid');
+            } else {
+                formGroup.classList.add('invalid');
+                inputElement.classList.add('invalid');
+                errorElement.style.display = 'block';
+            }
+        }
+        
+        function validateAllFields() {
+            const validations = [
+                validateName(),
+                validateEmail(),
+                validatePhone(),
+                validateEventType(),
+                validateEventDate(),
+                validateGuests(),
+                validateMessage()
+            ];
+            
+            return validations.every(validation => validation);
+        }
+
+        // Event inquiry functionality
+        function inquiryEvent(eventType) {
+            document.getElementById('event-type').value = eventType.toLowerCase().replace(' celebrations', '').replace(' events', '');
+            validateEventType();
+            document.getElementById('eventInquiryForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function submitEventInquiry(event) {
+            event.preventDefault();
+            
+            // Validate all fields before submission
+            if (!validateAllFields()) {
+                showToast('Please fix all validation errors before submitting.');
+                return;
+            }
+            
+            // Get form data
+            const countryCode = document.getElementById('country-code').value;
+            const phoneNumber = document.getElementById('phone').value;
+            const fullPhone = countryCode + ' ' + phoneNumber;
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: fullPhone,
+                eventType: document.getElementById('event-type').value,
+                eventDate: document.getElementById('event-date').value,
+                guests: document.getElementById('guests').value,
+                message: document.getElementById('message').value
+            };
+            
+            console.log('Form submitted:', formData);
+            
+            // Show success message
+            showToast('Event inquiry submitted! We will contact you within 24 hours.');
+            
+            // Reset form
+            document.getElementById('eventInquiryForm').reset();
+            
+            // Reset validation states
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('valid', 'invalid');
+            });
+            document.querySelectorAll('input, select, textarea').forEach(input => {
+                input.classList.remove('valid', 'invalid');
+            });
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.style.display = 'none';
+            });
+            
+            // Reset country code to default
+            const defaultCountry = countryCodes.find(c => c.code === '+92');
+            if (defaultCountry) {
+                document.getElementById('country-code').value = defaultCountry.code;
+                document.getElementById('country-flag').textContent = defaultCountry.flag;
+                document.getElementById('phone').placeholder = defaultCountry.placeholder;
+                document.getElementById('phone-format-hint').textContent = defaultCountry.hint;
+            }
+            
+            // Scroll to top of form
+            document.getElementById('eventInquiryForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.style.display = 'block';
+            setTimeout(() => { 
+                toast.style.display = 'none'; 
+            }, 3000);
+        }
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                // Close all dropdowns when closing mobile menu
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize country code dropdown
+            initCountryCodeDropdown();
+            
+            // Mobile menu event listener
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleMobileMenu();
+                });
+            }
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                const navLinks = document.getElementById('navLinks');
+                const menuBtn = document.getElementById('mobileMenuBtn');
+                if (navLinks.classList.contains('active') && 
+                    !navLinks.contains(e.target) && 
+                    !menuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    // Close all dropdowns
+                    document.querySelectorAll('.dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+            
+            // Close menu with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('navLinks').classList.remove('active');
+                    document.getElementById('mobileMenuBtn').innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+            
+            // Add click event to dropdown toggles for mobile
+            document.querySelectorAll('.dropdown > a').forEach(dropdownToggle => {
+                dropdownToggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const dropdown = this.parentElement;
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            });
+            
+            // Set minimum date for event date picker to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('event-date').min = today;
+            
+            // Don't initialize validation on page load - only when user interacts
+            // This prevents red errors from showing initially
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catering | Sweet Heaven | Artisanal Patisserie & Bespoke Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/cupcake.png">
+
+    <style>
+        :root {
+            --pink-bg: #fff5f7;
+            --accent-pink: #ff8fa3;
+            --gold: #c5a47e;
+            --dark-choco: #2d1b1b;
+            --white: #ffffff;
+            --light-gray: #f9f9f9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--pink-bg); 
+            color: var(--dark-choco); 
+            scroll-behavior: smooth; 
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 245, 247, 0.95); backdrop-filter: blur(10px); z-index: 1000;
+        }
+        .logo { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: var(--dark-choco); 
+            white-space: nowrap;
+        }
+        .logo span { color: var(--accent-pink); }
+        .nav-links { 
+            display: flex; 
+            gap: 30px; 
+            list-style: none; 
+        }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--dark-choco); 
+            font-size: 0.75rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* NAVBAR HOVER PINK */
+        .nav-links a:hover { color: var(--accent-pink); }
+
+        /* Mobile menu toggle */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-choco);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 15px 0;
+            z-index: 1001;
+        }
+        .dropdown-menu li {
+            list-style: none;
+        }
+        .dropdown-menu a {
+            padding: 10px 20px;
+            display: block;
+            color: var(--dark-choco);
+            font-size: 0.8rem;
+            text-transform: none;
+            font-weight: 400;
+        }
+        .dropdown-menu a:hover {
+            background: var(--pink-bg);
+            color: var(--accent-pink);
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* --- HERO BANNER --- */
+        .page-hero { 
+            height: 50vh; 
+            position: relative; 
+            overflow: hidden; 
+            margin-top: 65px; 
+            background: linear-gradient(rgba(45, 27, 27, 0.7), rgba(45, 27, 27, 0.7)), url('images/pexels-photo-941861.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        .page-hero-content h1 {
+            font-family: 'Cormorant Garamond';
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .page-hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* --- CATERING CONTENT --- */
+        .catering-section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond';
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--dark-choco);
+        }
+        .catering-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        .catering-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .catering-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+        .catering-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .catering-content {
+            padding: 25px;
+        }
+        .catering-title {
+            font-family: 'Cormorant Garamond';
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: var(--dark-choco);
+        }
+        .catering-price {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .catering-desc {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .btn-action { 
+            padding: 12px 25px; 
+            background: var(--accent-pink); 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            transition: 0.3s;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+        .btn-action:hover {
+            background: #ff7a93;
+            transform: translateY(-2px);
+        }
+
+        /* Menu Packages */
+        .menu-packages {
+            background: var(--white);
+            padding: 60px;
+            border-radius: 30px;
+            margin-bottom: 80px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .package {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #eee;
+        }
+        .package:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .package-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .package-title {
+            font-family: 'Cormorant Garamond';
+            font-size: 2rem;
+            color: var(--dark-choco);
+        }
+        .package-price {
+            color: var(--gold);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        .package-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .package-item {
+            background: var(--pink-bg);
+            padding: 20px;
+            border-radius: 15px;
+        }
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-choco);
+        }
+        .item-desc {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Inquiry Form */
+        .inquiry-form {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-choco);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Montserrat';
+            font-size: 1rem;
+        }
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Validation styles */
+        .form-group input:invalid,
+        .form-group select:invalid,
+        .form-group textarea:invalid {
+            border-color: #ff6b6b;
+        }
+
+        .form-group input:valid,
+        .form-group select:valid,
+        .form-group textarea:valid {
+            border-color: #2ecc71;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* --- TOAST MESSAGE --- */
+        #toast { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: var(--dark-choco); 
+            color: white; 
+            padding: 12px 30px; 
+            border-radius: 50px; 
+            display: none; 
+            z-index: 5000; 
+            font-weight: 600; 
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark-choco);
+            color: white;
+            padding: 60px 5% 30px;
+            margin-top: auto;
+        }
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        .footer-section h3 {
+            font-family: 'Cormorant Garamond';
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .footer-section a:hover {
+            color: var(--accent-pink);
+        }
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .social-icons a:hover {
+            background: var(--accent-pink);
+            transform: translateY(-3px);
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .page-hero-content h1 {
+                font-size: 3rem;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .menu-packages {
+                padding: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--pink-bg);
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                gap: 20px;
+                z-index: 999;
+                overflow-y: auto;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+                position: relative;
+                z-index: 1000;
+            }
+            .page-hero {
+                height: 40vh;
+            }
+            .page-hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .inquiry-form {
+                padding: 30px;
+            }
+            .package-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                display: none;
+                padding-left: 20px;
+                background: rgba(255,255,255,0.5);
+                margin-top: 10px;
+            }
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            .dropdown > a .fa-chevron-down {
+                transition: transform 0.3s;
+            }
+            .dropdown.active > a .fa-chevron-down {
+                transform: rotate(180deg);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .page-hero-content h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .catering-grid {
+                grid-template-columns: 1fr;
+            }
+            .menu-packages {
+                padding: 30px 20px;
+            }
+            .package-items {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            .page-hero {
+                height: 35vh;
+            }
+            .page-hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .catering-content {
+                padding: 20px;
+            }
+            .inquiry-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">SWEET<span>HEAVEN</span></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="catagory.html">COLLECTION</a></li>
+            <li><a href="gifthampers.html">GIFT HAMPERS</a></li>
+            
+            <li class="dropdown">
+                <a href="#">ABOUT <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="aboutus.html">Our Story</a></li>
+                    <li><a href="ourteam.html">Our Team</a></li>
+                    <li><a href="ourvalues.html">Our Values</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#">SUPPORT <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="customer-care.html">Customer Care</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#" class="active">SERVICES <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="catering.html" class="active">Catering</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <div class="page-hero-content">
+            <h1>Sweet Heaven Catering</h1>
+            <p>Elevate your gatherings with our exquisite catering services, bringing heavenly desserts to your table</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="catering-section">
+            <h2 class="section-title">Catering Services</h2>
+            <div class="catering-grid">
+                <div class="catering-card">
+                    <img src="images/pexels-photo-3734029.jpg" alt="Dessert Tables" class="catering-img" width="800" height="600">
+                    <div class="catering-content">
+                        <h3 class="catering-title">Dessert Tables</h3>
+                        <span class="catering-price">Starting from $300</span>
+                        <p class="catering-desc">Beautifully curated dessert displays featuring mini pastries, cakes, and sweet treats for your guests to enjoy.</p>
+                        <button class="btn-action" onclick="showServiceInterest('Dessert Tables')">I'm Interested</button>
+                    </div>
+                </div>
+
+                <div class="catering-card">
+                    <img src="images/pexels-photo-1449775.jpg" alt="Coffee Stations" class="catering-img" width="800" height="600">
+                    <div class="catering-content">
+                        <h3 class="catering-title">Coffee Stations</h3>
+                        <span class="catering-price">Starting from $200</span>
+                        <p class="catering-desc">Premium coffee service with barista, featuring our signature pastries and dessert pairings.</p>
+                        <button class="btn-action" onclick="showServiceInterest('Coffee Stations')">I'm Interested</button>
+                    </div>
+                </div>
+
+                <div class="catering-card">
+                    <img src="images/pexels-photo-4553111.jpg" alt="Custom Boxes" class="catering-img" width="800" height="600">
+                    <div class="catering-content">
+                        <h3 class="catering-title">Custom Dessert Boxes</h3>
+                        <span class="catering-price">From $15 per box</span>
+                        <p class="catering-desc">Individually packaged dessert boxes with your choice of pastries, perfect for corporate gifts or party favors.</p>
+                        <button class="btn-action" onclick="showServiceInterest('Custom Dessert Boxes')">I'm Interested</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-packages">
+                <h2 class="section-title" style="margin-bottom: 60px;">Catering Packages</h2>
+                
+                <div class="package">
+                    <div class="package-header">
+                        <h3 class="package-title">Petite Package</h3>
+                        <span class="package-price">$450+</span>
+                    </div>
+                    <div class="package-items">
+                        <div class="package-item">
+                            <div class="item-name">Mini Dessert Selection</div>
+                            <p class="item-desc">Assortment of 5 different mini desserts (50 pieces total)</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Macaron Tower</div>
+                            <p class="item-desc">3-tier macaron display with 30 pieces</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Setup & Service</div>
+                            <p class="item-desc">2-hour setup and display service included</p>
+                        </div>
+                    </div>
+                    <button class="btn-action" style="margin-top: 20px;" onclick="showServiceInterest('Petite Package')">Select Package</button>
+                </div>
+
+                <div class="package">
+                    <div class="package-header">
+                        <h3 class="package-title">Grand Package</h3>
+                        <span class="package-price">$850+</span>
+                    </div>
+                    <div class="package-items">
+                        <div class="package-item">
+                            <div class="item-name">Full Dessert Spread</div>
+                            <p class="item-desc">8 different dessert varieties (100 pieces total)</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Coffee & Tea Station</div>
+                            <p class="item-desc">Complete beverage service with barista</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Custom Cake Centerpiece</div>
+                            <p class="item-desc">3-tier custom designed cake for display and serving</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Full Service</div>
+                            <p class="item-desc">4-hour service with 2 staff members</p>
+                        </div>
+                    </div>
+                    <button class="btn-action" style="margin-top: 20px;" onclick="showServiceInterest('Grand Package')">Select Package</button>
+                </div>
+
+                <div class="package">
+                    <div class="package-header">
+                        <h3 class="package-title">Luxury Package</h3>
+                        <span class="package-price">$1,500+</span>
+                    </div>
+                    <div class="package-items">
+                        <div class="package-item">
+                            <div class="item-name">Complete Dessert Experience</div>
+                            <p class="item-desc">12 different premium desserts (200+ pieces)</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Live Crepe Station</div>
+                            <p class="item-desc">Chef preparing fresh crepes to order</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Chocolate Fountain</div>
+                            <p class="item-desc">3-tier chocolate fountain with dipping items</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Custom Menu Design</div>
+                            <p class="item-desc">Fully customized menu tailored to your event</p>
+                        </div>
+                        <div class="package-item">
+                            <div class="item-name">Premium Service</div>
+                            <p class="item-desc">6-hour service with 3 staff members</p>
+                        </div>
+                    </div>
+                    <button class="btn-action" style="margin-top: 20px;" onclick="showServiceInterest('Luxury Package')">Select Package</button>
+                </div>
+            </div>
+
+            <h2 class="section-title">Request Catering Quote</h2>
+            <div class="inquiry-form">
+                <form id="cateringInquiryForm" onsubmit="submitCateringInquiry(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required 
+                                   pattern="[A-Za-z\s]+" 
+                                   title="Please enter only letters (no numbers or special characters)"
+                                   oninput="validateName(this)">
+                            <small id="name-error" class="error-message">
+                                Names should contain only letters and spaces
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-date">Event Date *</label>
+                            <input type="date" id="event-date" name="event-date" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="guests">Number of Guests *</label>
+                            <select id="guests" name="guests" required>
+                                <option value="">Select Number</option>
+                                <option value="1-50">1-50</option>
+                                <option value="51-100">51-100</option>
+                                <option value="101-150">101-150</option>
+                                <option value="151-200">151-200</option>
+                                <option value="200+">200+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Estimated Budget *</label>
+                            <select id="budget" name="budget" required>
+                                <option value="">Select Budget Range</option>
+                                <option value="300-500">$300 - $500</option>
+                                <option value="500-1000">$500 - $1,000</option>
+                                <option value="1000-2000">$1,000 - $2,000</option>
+                                <option value="2000+">$2,000+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="services">Services Interested In</label>
+                        <select id="services" name="services" multiple style="height: 100px;">
+                            <option value="dessert-tables">Dessert Tables</option>
+                            <option value="coffee-stations">Coffee Stations</option>
+                            <option value="dessert-boxes">Dessert Boxes</option>
+                            <option value="petite-package">Petite Package</option>
+                            <option value="grand-package">Grand Package</option>
+                            <option value="luxury-package">Luxury Package</option>
+                            <option value="custom-cakes">Custom Cakes</option>
+                        </select>
+                        <small>Hold Ctrl/Cmd to select multiple options</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Event Details & Special Requests</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your event, dietary requirements, and any special requests..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-action">Submit Quote Request</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast"></div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Sweet Heaven</h3>
+                <p>Artisanal patisserie and bespoke cake lab crafting heavenly desserts since 2010.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Visit Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Patisserie Avenue</p>
+                <p>Sweet District, Paris 75001</p>
+                <p><i class="fas fa-clock"></i> Mon-Sat: 8AM-8PM</p>
+                <p>Sun: 9AM-6PM</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> hello@sweetheaven.com</p>
+                <p><i class="fas fa-truck"></i> Delivery within 5km radius</p>
+                <p>Catering & events available</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Catering Department</h3>
+                <p>For catering inquiries and custom menus:</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 987-6542</p>
+                <p><i class="fas fa-envelope"></i> catering@sweetheaven.com</p>
+                <p>Minimum 2 weeks notice required</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2026 Sweet Heaven Patisserie. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Name validation function
+        function validateName(input) {
+            const nameRegex = /^[A-Za-z\s]*$/; // Only letters and spaces
+            const errorElement = document.getElementById('name-error');
+            
+            if (!nameRegex.test(input.value)) {
+                // Remove any numbers from the input
+                input.value = input.value.replace(/[0-9]/g, '');
+                
+                // Show error message
+                errorElement.style.display = 'block';
+                input.style.borderColor = '#ff6b6b';
+                return false;
+            } else {
+                // Hide error message
+                errorElement.style.display = 'none';
+                input.style.borderColor = '#2ecc71';
+                return true;
+            }
+        }
+
+        // Form validation function
+        function validateForm() {
+            const nameInput = document.getElementById('name');
+            return validateName(nameInput);
+        }
+
+        // Catering inquiry functionality
+        function submitCateringInquiry(event) {
+            event.preventDefault();
+            
+            // Validate form before submission
+            if (!validateForm()) {
+                showToast('Please enter a valid name (letters only)');
+                document.getElementById('name').focus();
+                return;
+            }
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                eventDate: document.getElementById('event-date').value,
+                guests: document.getElementById('guests').value,
+                budget: document.getElementById('budget').value,
+                services: Array.from(document.getElementById('services').selectedOptions).map(option => option.value),
+                message: document.getElementById('message').value
+            };
+            
+            // In a real application, you would send this data to a server
+            // For now, we'll just show a success message
+            showToast('Catering inquiry submitted! We will contact you within 24 hours.');
+            
+            // Reset form
+            document.getElementById('cateringInquiryForm').reset();
+            
+            // Scroll to top of form
+            document.getElementById('cateringInquiryForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show service interest
+        function showServiceInterest(serviceName) {
+            // Pre-select the service in the dropdown
+            const servicesSelect = document.getElementById('services');
+            const options = Array.from(servicesSelect.options);
+            const optionToSelect = options.find(option => 
+                option.text.toLowerCase().includes(serviceName.toLowerCase()) ||
+                option.value.toLowerCase().includes(serviceName.toLowerCase().replace(' ', '-'))
+            );
+            
+            if (optionToSelect) {
+                optionToSelect.selected = true;
+            }
+            
+            // Scroll to form
+            document.getElementById('cateringInquiryForm').scrollIntoView({ behavior: 'smooth' });
+            
+            // Show toast message
+            showToast(`Added ${serviceName} to your inquiry! Please fill out the form below.`);
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.style.display = 'block';
+            setTimeout(() => { 
+                toast.style.display = 'none'; 
+            }, 3000);
+        }
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                // Close all dropdowns when closing mobile menu
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu event listener
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleMobileMenu();
+                });
+            }
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                const navLinks = document.getElementById('navLinks');
+                const menuBtn = document.getElementById('mobileMenuBtn');
+                if (navLinks.classList.contains('active') && 
+                    !navLinks.contains(e.target) && 
+                    !menuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    // Close all dropdowns
+                    document.querySelectorAll('.dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+            
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('navLinks').classList.remove('active');
+                    document.getElementById('mobileMenuBtn').innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+            
+            // Add click event to dropdown toggles for mobile
+            document.querySelectorAll('.dropdown > a').forEach(dropdownToggle => {
+                dropdownToggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const dropdown = this.parentElement;
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            });
+            
+            // Set minimum date for event date picker to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('event-date').min = today;
+            
+            // Validate name on form submit
+            document.getElementById('name').addEventListener('blur', function() {
+                validateName(this);
+            });
+            
+            // Prevent form submission if name is invalid
+            document.getElementById('cateringInquiryForm').addEventListener('submit', function(e) {
+                if (!validateName(document.getElementById('name'))) {
+                    e.preventDefault();
+                    showToast('Please enter a valid name (letters only)');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

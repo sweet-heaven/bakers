@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Hampers | Sweet Heaven</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/cupcake.png">
+    <style>
+        :root {
+            --pink-bg: #fff5f7;
+            --accent-pink: #ff8fa3;
+            --gold: #c5a47e;
+            --dark-choco: #2d1b1b;
+            --white: #ffffff;
+            --light-gray: #f9f9f9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--pink-bg); 
+            color: var(--dark-choco); 
+            scroll-behavior: smooth; 
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 245, 247, 0.95); backdrop-filter: blur(10px); z-index: 1000;
+        }
+        .logo { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: var(--dark-choco); 
+            white-space: nowrap;
+        }
+        .logo span { color: var(--accent-pink); }
+        .nav-links { 
+            display: flex; 
+            gap: 30px; 
+            list-style: none; 
+        }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--dark-choco); 
+            font-size: 0.75rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* NAVBAR HOVER PINK */
+        .nav-links a:hover { color: var(--accent-pink); }
+        .nav-links a.active { color: var(--gold); }
+
+        /* Mobile menu toggle */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-choco);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 15px 0;
+            z-index: 1001;
+        }
+        .dropdown-menu li {
+            list-style: none;
+        }
+        .dropdown-menu a {
+            padding: 10px 20px;
+            display: block;
+            color: var(--dark-choco);
+            font-size: 0.8rem;
+            text-transform: none;
+            font-weight: 400;
+        }
+        .dropdown-menu a:hover {
+            background: var(--pink-bg);
+            color: var(--accent-pink);
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Cart button styles */
+        .cart-btn {
+            cursor: pointer;
+            background: var(--accent-pink);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 25px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+        .cart-count { 
+            position: absolute; 
+            top: -8px; 
+            right: -8px; 
+            background: #ff4757; 
+            color: white; 
+            font-size: 0.7rem; 
+            font-weight: bold; 
+            width: 20px; 
+            height: 20px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            display: none;
+        }
+
+        /* ========== HEADER ========== */
+        .hamper-header {
+            height: 60vh;
+            background: linear-gradient(rgba(45,27,27,0.4), rgba(45,27,27,0.4)), url('images/pexels-photo-205961.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 65px;
+            padding-top: 20px;
+        }
+        
+        .hamper-header h1 { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 4rem; 
+            font-style: italic;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .header-subtitle {
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            font-size: 0.9rem; 
+            margin-bottom: 10px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .header-divider {
+            width: 100px;
+            height: 2px;
+            background: var(--gold);
+            margin: 20px auto;
+        }
+
+        /* ========== GRID SECTION ========== */
+        .section { 
+            padding: 80px 5%; 
+            text-align: center; 
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond'; 
+            font-size: 2.8rem; 
+            margin-bottom: 10px;
+            color: var(--dark-choco);
+        }
+        
+        .section-subtitle {
+            font-style: italic; 
+            opacity: 0.7; 
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+        
+        .hamper-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 40px; 
+            margin-top: 50px;
+        }
+
+        .hamper-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid transparent;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .hamper-card:hover { 
+            transform: translateY(-20px); 
+            border-color: var(--gold);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+        }
+        
+        .hamper-img { 
+            width: 100%; 
+            height: 280px; 
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .hamper-card:hover .hamper-img {
+            transform: scale(1.05);
+        }
+        
+        .hamper-body { 
+            padding: 25px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .hamper-body h2 { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 1.8rem; 
+            margin-bottom: 10px; 
+            color: var(--dark-choco);
+        }
+        
+        .hamper-body p { 
+            font-size: 0.9rem; 
+            color: #666; 
+            margin-bottom: 20px; 
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .price { 
+            font-size: 1.6rem; 
+            font-weight: 700; 
+            color: var(--gold); 
+            display: block; 
+            margin-bottom: 20px;
+            font-family: 'Cormorant Garamond';
+        }
+        
+        .btn-action { 
+            width: 100%; 
+            padding: 14px; 
+            background: var(--accent-pink); 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .btn-action:hover {
+            background: #ff7a93;
+            transform: translateY(-2px);
+        }
+        
+        .btn-order.gift {
+            background: var(--dark-choco);
+            margin-top: 10px;
+        }
+        
+        .btn-order.gift:hover {
+            background: #3a2a2a;
+        }
+
+        /* ========== BADGE ========== */
+        .badge {
+            background: var(--gold);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(197, 164, 126, 0.3);
+        }
+
+        /* ========== GIFT POPUP ========== */
+        .gift-overlay {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0,0,0,0.7); 
+            backdrop-filter: blur(8px); 
+            z-index: 3000;
+            justify-content: center; 
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .gift-box {
+            background: white; 
+            padding: 40px; 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 500px;
+            text-align: center; 
+            animation: popIn 0.4s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        @keyframes popIn { 
+            0% { transform: scale(0.8); opacity: 0; } 
+            70% { transform: scale(1.05); } 
+            100% { transform: scale(1); opacity: 1; } 
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover { color: var(--accent-pink); }
+        
+        .gift-box h2 { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 2.2rem; 
+            margin-bottom: 10px;
+            color: var(--dark-choco);
+        }
+        
+        .gift-icon {
+            font-size: 3rem;
+            color: var(--gold);
+            margin: 20px 0;
+        }
+        
+        textarea {
+            width: 100%; 
+            height: 120px; 
+            padding: 15px; 
+            margin: 20px 0;
+            border-radius: 12px; 
+            border: 1px solid #eee; 
+            font-family: 'Montserrat'; 
+            resize: none; 
+            outline: none;
+            transition: border 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        textarea:focus {
+            border-color: var(--accent-pink);
+        }
+
+        /* --- BAG SIDEBAR --- */
+        .sidebar { 
+            position: fixed; 
+            right: -450px; 
+            top: 0; 
+            width: 400px; 
+            height: 100%; 
+            background: white; 
+            z-index: 2000; 
+            transition: 0.5s; 
+            padding: 40px; 
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1); 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .sidebar.active { right: 0; }
+        .cart-item { 
+            display: flex; 
+            gap: 15px; 
+            padding: 15px 0; 
+            border-bottom: 1px solid #eee; 
+            align-items: center; 
+            text-align: left; 
+        }
+        .cart-item-img { 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 8px; 
+            object-fit: cover; 
+        }
+        .qty-btn { 
+            background: #eee; 
+            border: none; 
+            width: 25px; 
+            height: 25px; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Cart item remove button */
+        .remove-item { 
+            background: transparent; 
+            border: none; 
+            color: #ff6b6b; 
+            font-size: 1.2rem; 
+            cursor: pointer; 
+            padding: 5px; 
+            margin-left: 10px; 
+        }
+        .remove-item:hover { color: #ff0000; }
+
+        /* EMPTY CART STATE */
+        .empty-cart { 
+            text-align: center; 
+            padding: 40px 0; 
+            color: #999; 
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .empty-cart img { 
+            width: 100px; 
+            opacity: 0.5; 
+            margin-bottom: 20px; 
+        }
+
+        /* Cart actions */
+        .cart-actions { 
+            margin-top: 20px; 
+            display: flex; 
+            gap: 10px; 
+        }
+        .clear-cart { 
+            background: #ff6b6b !important; 
+        }
+        .clear-cart:hover { 
+            background: #ff4757 !important; 
+        }
+        
+        /* Item counter animation */
+        .qty-change { 
+            animation: pulse 0.3s ease; 
+        }
+        @keyframes pulse { 
+            0% { transform: scale(1); } 
+            50% { transform: scale(1.1); } 
+            100% { transform: scale(1); } 
+        }
+
+        /* --- TOAST MESSAGE --- */
+        #toast { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: var(--dark-choco); 
+            color: white; 
+            padding: 12px 30px; 
+            border-radius: 50px; 
+            display: none; 
+            z-index: 5000; 
+            font-weight: 600; 
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark-choco);
+            color: white;
+            padding: 60px 5% 30px;
+            margin-top: auto;
+        }
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        .footer-section h3 {
+            font-family: 'Cormorant Garamond';
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .footer-section a:hover {
+            color: var(--accent-pink);
+        }
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .social-icons a:hover {
+            background: var(--accent-pink);
+            transform: translateY(-3px);
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                display: none;
+                padding-left: 20px;
+            }
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--pink-bg);
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                gap: 20px;
+                z-index: 999;
+                overflow-y: auto;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+                position: relative;
+                z-index: 1000;
+            }
+            .cart-count {
+                top: -5px;
+                right: -5px;
+                width: 18px;
+                height: 18px;
+                font-size: 0.6rem;
+            }
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                display: none;
+                padding-left: 20px;
+                background: rgba(255,255,255,0.5);
+                margin-top: 10px;
+            }
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            .dropdown > a .fa-chevron-down {
+                transition: transform 0.3s;
+            }
+            .dropdown.active > a .fa-chevron-down {
+                transform: rotate(180deg);
+            }
+            .hamper-header h1 {
+                font-size: 3rem;
+            }
+            .hamper-header {
+                height: 50vh;
+            }
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .hamper-header h1 {
+                font-size: 2.5rem;
+            }
+            .section {
+                padding: 60px 5%;
+            }
+            .hamper-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .gift-box {
+                padding: 30px 20px;
+            }
+            .hamper-card:hover {
+                transform: translateY(-10px);
+            }
+            .sidebar {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            .hamper-header {
+                height: 40vh;
+            }
+            .hamper-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== NAVBAR (FROM INDEX.HTML) ========== -->
+    <nav>
+        <div class="logo">SWEET<span>HEAVEN</span></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="catagory.html">COLLECTION</a></li>
+            <li><a href="gifthampers.html" class="active">GIFT HAMPERS</a></li>
+            
+            <li class="dropdown">
+                <a href="#">ABOUT <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="aboutus.html">Our Story</a></li>
+                    <li><a href="ourteam.html">Our Team</a></li>
+                    <li><a href="ourvalues.html">Our Values</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#">SUPPORT <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="customer-care.html">Customer Care</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#">SERVICES <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="catering.html">Catering</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div onclick="toggleCart()" style="cursor:pointer; background:var(--accent-pink); color:white; padding:10px 22px; border-radius:25px; position:relative; display:flex; align-items:center; gap:8px;" class="cart-btn">
+                <i class="fas fa-shopping-bag"></i>  (<span id="count">0</span>)
+                <div id="cart-notification" class="cart-count" style="display:none;"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HEADER ========== -->
+    <header class="hamper-header">
+        <div>
+            <p class="header-subtitle">The Art of Gifting</p>
+            <h1>Heavenly Collections</h1>
+            <div class="header-divider"></div>
+            <p style="max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Indulge in our exclusive gift hampers, curated with passion and wrapped in elegance</p>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <section class="section">
+        <h2 class="section-title">Hand-Curated Hampers</h2>
+        <p class="section-subtitle">Wrapped in silk, filled with artisanal wonder</p>
+
+        <div class="hamper-grid">
+            <div class="hamper-card">
+                <span class="badge">Bestseller</span>
+                <img src="images/pexels-photo-2144444.jpg" class="hamper-img" alt="The Royal Box" width="800" height="600">
+                <div class="hamper-body">
+                    <h2>The Royal Box</h2>
+                    <p>Includes 12 gold-leaf macarons, a signature Mille-Feuille, and a jar of our 24K Gold Honey. Presented in a handcrafted mahogany box with silk lining.</p>
+                    <span class="price">$145.00</span>
+                    <button class="btn-action" onclick="addToBag('The Royal Box', 145, 'images/pexels-photo-2144444.jpg')">Add to Bag</button>
+                    <button class="btn-action btn-order gift" onclick="openGift('The Royal Box')">Send as Gift</button>
+                </div>
+            </div>
+
+            <div class="hamper-card">
+                <img src="images/pexels-photo-1702373.jpg" class="hamper-img" alt="The Parisian Picnic" width="800" height="600">
+                <div class="hamper-body">
+                    <h2>The Parisian Picnic</h2>
+                    <p>A curated selection of 4 mini Framboise Tarts, Rose Water Macarons, and organic Champagne Mousse. Perfect for romantic celebrations.</p>
+                    <span class="price">$95.00</span>
+                    <button class="btn-action" onclick="addToBag('The Parisian Picnic', 95, 'images/pexels-photo-1702373.jpg')">Add to Bag</button>
+                    <button class="btn-action btn-order gift" onclick="openGift('The Parisian Picnic')">Send as Gift</button>
+                </div>
+            </div>
+
+            <div class="hamper-card">
+                <img src="images/pexels-photo-4110007.jpg" class="hamper-img" alt="Atelier Masterpiece" width="800" height="600">
+                <div class="hamper-body">
+                    <h2>Atelier Masterpiece</h2>
+                    <p>The ultimate indulgence: A Bespoke Lab creation voucher paired with our 10 signature Eclairs d'Or. Includes a personalized chef consultation.</p>
+                    <span class="price">$210.00</span>
+                    <button class="btn-action" onclick="addToBag('Atelier Masterpiece', 210, 'images/pexels-photo-4110007.jpg')">Add to Bag</button>
+                    <button class="btn-action btn-order gift" onclick="openGift('Atelier Masterpiece')">Send as Gift</button>
+                </div>
+            </div>
+            
+            <div class="hamper-card">
+                <span class="badge">New</span>
+                <img src="images/pexels-photo-1126359.jpg" class="hamper-img" alt="Chocolate Symphony" width="800" height="600">
+                <div class="hamper-body">
+                    <h2>Chocolate Symphony</h2>
+                    <p>A decadent collection of 18 artisanal chocolates from around the world, paired with a bottle of vintage dessert wine and hand-dipped strawberries.</p>
+                    <span class="price">$165.00</span>
+                    <button class="btn-action" onclick="addToBag('Chocolate Symphony', 165, 'images/pexels-photo-1126359.jpg')">Add to Bag</button>
+                    <button class="btn-action btn-order gift" onclick="openGift('Chocolate Symphony')">Send as Gift</button>
+                </div>
+            </div>
+            
+            <div class="hamper-card">
+                <img src="images/pexels-photo-541216.jpg" class="hamper-img" alt="Blissful Breakfast" width="800" height="600">
+                <div class="hamper-body">
+                    <h2>Blissful Breakfast</h2>
+                    <p>Morning delights include gourmet croissants, artisan preserves, Italian coffee blend, truffle honey, and our signature almond brioche.</p>
+                    <span class="price">$120.00</span>
+                    <button class="btn-action" onclick="addToBag('Blissful Breakfast', 120, 'images/pexels-photo-541216.jpg')">Add to Bag</button>
+                    <button class="btn-action btn-order gift" onclick="openGift('Blissful Breakfast')">Send as Gift</button>
+                </div>
+            </div>
+            
+            <div class="hamper-card">
+                <span class="badge">Limited</span>
+                <img src="images/090424-Alt-Fall-Flavors.jpg" class="hamper-img" alt="Seasonal Celebration" width="800" height="600">
+                <div class="hamper-body">
+                    <h2>Seasonal Celebration</h2>
+                    <p>A rotating selection of seasonal specialties. Currently features autumn spiced cakes, pumpkin macarons, and maple pecan delights.</p>
+                    <span class="price">$135.00</span>
+                    <button class="btn-action" onclick="addToBag('Seasonal Celebration', 135, 'images/090424-Alt-Fall-Flavors.jpg')">Add to Bag</button>
+                    <button class="btn-action btn-order gift" onclick="openGift('Seasonal Celebration')">Send as Gift</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== GIFT MODAL ========== -->
+    <div id="gift-modal" class="gift-overlay">
+        <div class="gift-box">
+            <button class="close-btn" onclick="closeGift()"><i class="fas fa-times"></i></button>
+            <div class="gift-icon"><i class="fas fa-gift"></i></div>
+            <h2 id="gift-title"></h2>
+            <p style="font-size: 0.9rem; margin-top: 10px; color: #777;">Add a personal note to your gift:</p>
+            <textarea id="gift-note" placeholder="Write your heartfelt message here (e.g. Happy Birthday! Thinking of you on this special day...)"></textarea>
+            <p style="font-size: 0.75rem; color: #aaa; margin-bottom: 20px; text-align: left;">Your note will be handwritten on premium cardstock and included with the gift.</p>
+            <button class="btn-action" onclick="completeOrder()">Add to Cart & Wrap Beautifully</button>
+        </div>
+    </div>
+
+    <!-- ========== CART SIDEBAR (FROM INDEX.HTML) ========== -->
+    <div id="cart-sidebar" class="sidebar">
+        <h2 style="margin-bottom:20px; font-family: 'Cormorant Garamond';">Your Bag</h2>
+        <div id="cart-list" style="flex:1; overflow-y:auto;"></div>
+        <div id="cart-summary" style="padding-top:20px; border-top: 1px solid #eee; display: none;">
+            <div style="margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>Subtotal</span>
+                    <span>$<span id="subtotal-val">0</span>.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>Delivery</span>
+                    <span>$<span id="delivery-val">5</span>.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 1.1rem;">
+                    <span>Total</span>
+                    <span>$<span id="total-val">0</span>.00</span>
+                </div>
+            </div>
+            <div class="cart-actions">
+                <button class="btn-action clear-cart" onclick="clearCart()">Clear Bag</button>
+                <button class="btn-action" style="background:var(--dark-choco);" onclick="goToCheckout()">Checkout</button>
+            </div>
+            <button onclick="toggleCart()" class="btn-action" style="background:#888; margin-top:10px;">Continue Shopping</button>
+        </div>
+        <div id="empty-cart" class="empty-cart" style="display: none;">
+            <img src="images/2038854.png" alt="Empty cart">
+            <h3>Your bag is empty</h3>
+            <p>Add some heavenly treats to get started!</p>
+            <button onclick="toggleCart()" class="btn-action" style="margin-top:20px; width: auto; padding: 10px 30px;">Browse Collection</button>
+        </div>
+    </div>
+
+    <!-- ========== TOAST NOTIFICATION ========== -->
+    <div id="toast">Added to Bag!</div>
+
+    <!-- ========== FOOTER (FROM INDEX.HTML) ========== -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Sweet Heaven</h3>
+                <p>Artisanal patisserie and bespoke cake lab crafting heavenly desserts since 2010.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Visit Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Patisserie Avenue</p>
+                <p>Sweet District, Paris 75001</p>
+                <p><i class="fas fa-clock"></i> Mon-Sat: 8AM-8PM</p>
+                <p>Sun: 9AM-6PM</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> hello@sweetheaven.com</p>
+                <p><i class="fas fa-truck"></i> Delivery within 5km radius</p>
+                <p>Catering & events available</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Subscribe for exclusive offers and new creations.</p>
+                <div style="margin-top: 15px;">
+                    <input type="email" placeholder="Your email" style="width: 100%; padding: 10px; border-radius: 5px; border: none; margin-bottom: 10px;">
+                    <button class="btn-action" style="padding: 10px 20px; width: 100%;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2026 Sweet Heaven Patisserie. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ========== BAG SYSTEM (FROM INDEX.HTML) ==========
+        let bag = JSON.parse(localStorage.getItem('heavenBag')) || [];
+        let currentGiftItem = "";
+        let giftNote = "";
+
+        function saveBag() {
+            localStorage.setItem('heavenBag', JSON.stringify(bag));
+            updateUI();
+            updateCartNotification();
+        }
+
+        function addToBag(n, p, i) {
+            const exists = bag.find(item => item.n === n);
+            if(exists) { 
+                exists.q++; 
+                showToast(`Another ${n} added! Total: ${exists.q}`);
+            } 
+            else { 
+                bag.push({ n, p, i, q: 1, id: Date.now() }); 
+                showToast(`${n} added to bag!`);
+            }
+            saveBag();
+            
+            // Show notification bubble
+            const notification = document.getElementById('cart-notification');
+            notification.style.display = 'flex';
+            notification.innerText = '+1';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 1000);
+        }
+
+        function changeQty(id, delta) {
+            const item = bag.find(x => x.id === id);
+            if (item) {
+                item.q += delta;
+                if (item.q <= 0) {
+                    bag = bag.filter(x => x.id !== id);
+                    showToast('Item removed from bag');
+                } else {
+                    // Animate the quantity change
+                    const qtyElement = document.querySelector(`[data-id="${id}"] .qty-display`);
+                    if (qtyElement) {
+                        qtyElement.classList.add('qty-change');
+                        setTimeout(() => qtyElement.classList.remove('qty-change'), 300);
+                    }
+                }
+                saveBag();
+            }
+        }
+
+        function removeItem(id) {
+            const item = bag.find(x => x.id === id);
+            if (item) {
+                bag = bag.filter(x => x.id !== id);
+                showToast(`${item.n} removed from bag`);
+                saveBag();
+            }
+        }
+
+        function clearCart() {
+            if (bag.length === 0) return;
+            if (confirm('Are you sure you want to clear your bag?')) {
+                bag = [];
+                saveBag();
+                showToast('Bag cleared');
+            }
+        }
+
+        function updateUI() {
+            const totalItems = bag.reduce((a, b) => a + b.q, 0);
+            document.getElementById('count').innerText = totalItems;
+            
+            const subtotal = bag.reduce((a, b) => a + (b.p * b.q), 0);
+            const delivery = 5; // Fixed delivery fee
+            const total = subtotal + delivery;
+            
+            document.getElementById('subtotal-val').innerText = subtotal;
+            document.getElementById('delivery-val').innerText = delivery;
+            document.getElementById('total-val').innerText = total;
+            
+            const cartList = document.getElementById('cart-list');
+            const cartSummary = document.getElementById('cart-summary');
+            const emptyCart = document.getElementById('empty-cart');
+            
+            if (bag.length === 0) {
+                cartSummary.style.display = 'none';
+                emptyCart.style.display = 'block';
+                cartList.innerHTML = '';
+            } else {
+                cartSummary.style.display = 'block';
+                emptyCart.style.display = 'none';
+                
+                cartList.innerHTML = bag.map(item => `
+                    <div class="cart-item" data-id="${item.id}" onclick="event.stopPropagation();">
+                        <img src="${item.i}" class="cart-item-img">
+                        <div style="flex:1">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h4 style="font-size:0.9rem;">${item.n}</h4>
+                                <button class="remove-item" onclick="event.stopPropagation(); removeItem(${item.id})" title="Remove item">×</button>
+                            </div>
+                            <p style="color:var(--gold); font-weight:700;">$${item.p * item.q}.00</p>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button class="qty-btn" onclick="event.stopPropagation(); changeQty(${item.id}, -1)" title="Decrease quantity">-</button>
+                                <span class="qty-display">${item.q}</span>
+                                <button class="qty-btn" onclick="event.stopPropagation(); changeQty(${item.id}, 1)" title="Increase quantity">+</button>
+                            </div>
+                        </div>
+                    </div>`).join('');
+            }
+        }
+
+        function updateCartNotification() {
+            const notification = document.getElementById('cart-notification');
+            const totalItems = bag.reduce((a, b) => a + b.q, 0);
+            if (totalItems > 0) {
+                notification.innerText = totalItems;
+                notification.style.display = 'flex';
+            } else {
+                notification.style.display = 'none';
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.style.display = 'block';
+            setTimeout(() => { 
+                toast.style.display = 'none'; 
+            }, 2000);
+        }
+
+        function toggleCart() { 
+            document.getElementById('cart-sidebar').classList.toggle('active'); 
+            updateUI();
+        }
+
+        function goToCheckout() {
+            if(bag.length === 0) {
+                showToast("Your bag is empty. Add some treats first!");
+                return;
+            }
+            // Redirect to checkout page
+            window.location.href = "checkout.html";
+        }
+
+        // ========== GIFT MODAL FUNCTIONS ==========
+        function openGift(name) {
+            currentGiftItem = name;
+            document.getElementById('gift-title').innerText = "Personalize: " + name;
+            document.getElementById('gift-modal').style.display = 'flex';
+        }
+        
+        function closeGift() {
+            document.getElementById('gift-modal').style.display = 'none';
+            document.getElementById('gift-note').value = "";
+        }
+        
+        function completeOrder() {
+            const note = document.getElementById('gift-note').value;
+            
+            // Find the item to add to cart
+            let itemPrice = 0;
+            let itemImage = '';
+            
+            // Map item names to prices and images
+            const items = {
+                'The Royal Box': { price: 145, image: 'images/pexels-photo-2144444.jpg' },
+                'The Parisian Picnic': { price: 95, image: 'images/pexels-photo-1702373.jpg' },
+                'Atelier Masterpiece': { price: 210, image: 'images/pexels-photo-4110007.jpg' },
+                'Chocolate Symphony': { price: 165, image: 'images/pexels-photo-1126359.jpg' },
+                'Blissful Breakfast': { price: 120, image: 'images/pexels-photo-541216.jpg' },
+                'Seasonal Celebration': { price: 135, image: 'images/090424-Alt-Fall-Flavors.jpg' }
+            };
+            
+            if (items[currentGiftItem]) {
+                itemPrice = items[currentGiftItem].price;
+                itemImage = items[currentGiftItem].image;
+                
+                // Add gift note to item data
+                const exists = bag.find(item => item.n === currentGiftItem && item.giftNote);
+                if(!exists) {
+                    bag.push({ 
+                        n: currentGiftItem + " (Gift)", 
+                        p: itemPrice, 
+                        i: itemImage, 
+                        q: 1, 
+                        id: Date.now(),
+                        giftNote: note || "No message provided"
+                    }); 
+                    showToast(`${currentGiftItem} added as a gift!`);
+                } else {
+                    exists.q++;
+                    showToast(`Another ${currentGiftItem} gift added!`);
+                }
+                saveBag();
+            }
+            
+            closeGift();
+        }
+
+        // ========== MOBILE MENU FUNCTIONS (FROM INDEX.HTML) ==========
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                // Close all dropdowns when closing mobile menu
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        }
+
+        // ========== INITIALIZE ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize bag UI
+            updateUI(); 
+            updateCartNotification();
+            
+            // Mobile menu event listener
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleMobileMenu();
+                });
+            }
+            
+            // Close cart when clicking outside
+            document.addEventListener('click', (e) => {
+                const cart = document.getElementById('cart-sidebar');
+                const cartBtn = document.querySelector('.cart-btn');
+                if (cart.classList.contains('active') && 
+                    !cart.contains(e.target) && 
+                    !cartBtn.contains(e.target)) {
+                    cart.classList.remove('active');
+                }
+                
+                // Close mobile menu when clicking outside
+                const navLinks = document.getElementById('navLinks');
+                const menuBtn = document.getElementById('mobileMenuBtn');
+                if (navLinks.classList.contains('active') && 
+                    !navLinks.contains(e.target) && 
+                    !menuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    // Close all dropdowns
+                    document.querySelectorAll('.dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+                
+                // Close gift modal when clicking outside
+                const giftModal = document.getElementById('gift-modal');
+                if (giftModal.style.display === 'flex' && e.target === giftModal) {
+                    closeGift();
+                }
+            });
+            
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeGift();
+                    document.getElementById('cart-sidebar').classList.remove('active');
+                    document.getElementById('navLinks').classList.remove('active');
+                    document.getElementById('mobileMenuBtn').innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+            
+            // Add click event to dropdown toggles for mobile
+            document.querySelectorAll('.dropdown > a').forEach(dropdownToggle => {
+                dropdownToggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const dropdown = this.parentElement;
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            });
+            
+            // Add subtle hover effect to all hamper cards
+            const cards = document.querySelectorAll('.hamper-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

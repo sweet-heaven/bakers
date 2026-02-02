@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Sweet Heaven</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/cupcake.png">
+    <style>
+        :root {
+            --pink-bg: #fff5f7;
+            --accent-pink: #ff8fa3;
+            --gold: #c5a47e;
+            --dark-choco: #2d1b1b;
+            --white: #ffffff;
+            --light-gray: #f9f9f9;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--pink-bg); 
+            color: var(--dark-choco); 
+            scroll-behavior: smooth; 
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 245, 247, 0.95); backdrop-filter: blur(10px); z-index: 1000;
+            height: 70px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .logo { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: var(--dark-choco); 
+            white-space: nowrap;
+        }
+        .logo span { color: var(--accent-pink); }
+        
+        .payment-container {
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .payment-form-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        .order-summary-section {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .checkout-header {
+            text-align: center;
+            margin: 90px 0 40px;
+            padding: 0 20px;
+        }
+        .checkout-header h1 {
+            font-family: 'Cormorant Garamond';
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-choco);
+        }
+        .checkout-header p {
+            font-size: 1.2rem;
+            color: #777;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-choco);
+        }
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Montserrat';
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(255, 143, 163, 0.1);
+        }
+        .form-group.invalid input,
+        .form-group.invalid select,
+        .form-group.invalid textarea {
+            border-color: #ff4757;
+            background-color: rgba(255, 71, 87, 0.05);
+        }
+        .form-group.valid input,
+        .form-group.valid select,
+        .form-group.valid textarea {
+            border-color: #2ed573;
+        }
+        .error-message {
+            color: #ff4757;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+        .success-message {
+            color: #2ed573;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Phone input with country code */
+        .phone-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .country-code-container {
+            position: relative;
+            width: 140px;
+            flex-shrink: 0;
+        }
+        
+        .country-code-select {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Montserrat';
+            font-size: 0.95rem;
+            background-color: white;
+            cursor: pointer;
+            appearance: none;
+        }
+        
+        .country-flag {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+        
+        .phone-number-input {
+            flex: 1;
+            position: relative;
+        }
+        
+        .validation-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            display: none;
+        }
+        .form-group.invalid .validation-icon.invalid {
+            display: block;
+            color: #ff4757;
+        }
+        .form-group.valid .validation-icon.valid {
+            display: block;
+            color: #2ed573;
+        }
+        
+        .payment-methods {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .payment-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: #777;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        .payment-tab.active {
+            color: var(--accent-pink);
+            border-bottom-color: var(--accent-pink);
+        }
+        .payment-details {
+            display: none;
+        }
+        .payment-details.active {
+            display: block;
+        }
+        
+        .btn-action { 
+            width: 100%; 
+            padding: 14px; 
+            background: var(--accent-pink); 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .btn-action:hover {
+            background: #ff7a93;
+            transform: translateY(-2px);
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .order-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-choco);
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 2px solid var(--gold);
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--accent-pink);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        #toast { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: var(--dark-choco); 
+            color: white; 
+            padding: 12px 30px; 
+            border-radius: 50px; 
+            display: none; 
+            z-index: 5000; 
+            font-weight: 600; 
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        .spinner {
+            display: none;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .payment-container {
+                flex-direction: column;
+                margin-top: 100px;
+            }
+            .checkout-header {
+                margin: 80px 0 30px;
+            }
+            .checkout-header h1 {
+                font-size: 2.5rem;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            nav {
+                padding: 10px 5%;
+                height: 60px;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .phone-input-container {
+                flex-direction: column;
+            }
+            .country-code-container {
+                width: 100%;
+            }
+        }
+
+        /* Terms & Conditions Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow: auto;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .modal h3 { margin-bottom: 10px; font-family: 'Cormorant Garamond'; }
+        .modal .modal-body { color: #444; line-height: 1.6; font-size: 0.95rem; }
+        .modal .modal-actions { margin-top: 15px; display: flex; gap: 10px; justify-content: flex-end; }
+        .modal .btn { padding: 10px 14px; border-radius: 8px; border: none; cursor: pointer; }
+        .modal .btn.close { background: transparent; color: #666; border: 1px solid #ddd; }
+        .modal .btn.primary { background: var(--accent-pink); color: white; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">SWEET<span>HEAVEN</span></div>
+        <a href="index.html" style="text-decoration: none; color: var(--dark-choco); font-weight: 600;">← Back to Shop</a>
+    </nav>
+
+    <div class="checkout-header">
+        <h1>Complete Your Order</h1>
+        <p>Final step to heaven on earth</p>
+    </div>
+    
+    <div class="payment-container">
+        <div class="payment-form-section">
+            <form id="paymentForm">
+                <h2 style="margin-bottom: 20px; font-family: 'Cormorant Garamond';">Customer Details</h2>
+                
+                <div class="form-group">
+                    <label for="customerName">Full Name *</label>
+                    <input type="text" id="customerName" name="customerName" required placeholder="Enter your full name">
+                    <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                    <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                    <div class="error-message" id="nameError">Please enter a valid full name (letters and spaces only)</div>
+                    <div class="success-message" id="nameSuccess">Name looks good!</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerEmail">Email Address *</label>
+                    <input type="email" id="customerEmail" name="customerEmail" required placeholder="you@example.com">
+                    <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                    <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    <div class="success-message" id="emailSuccess">Email looks good!</div>
+                </div>
+                
+                <!-- Phone with Country Code -->
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number *</label>
+                    <div class="phone-input-container">
+                        <div class="country-code-container">
+                            <select id="countryCode" class="country-code-select">
+                                <!-- Options populated by JavaScript -->
+                            </select>
+                            <span id="countryFlag" class="country-flag">🇵🇰</span>
+                        </div>
+                        <div class="phone-number-input">
+                            <input type="tel" id="customerPhone" name="customerPhone" required placeholder="03XX XXXXXXX">
+                            <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                            <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                        </div>
+                    </div>
+                    <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+                    <div class="success-message" id="phoneSuccess">Phone number looks good!</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryAddress">Delivery Address *</label>
+                    <textarea id="deliveryAddress" name="deliveryAddress" rows="3" required placeholder="Street address, apartment, suite, etc."></textarea>
+                    <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                    <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                    <div class="error-message" id="addressError">Please enter a complete delivery address (minimum 10 characters)</div>
+                    <div class="success-message" id="addressSuccess">Address looks good!</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryDate">Preferred Delivery Date *</label>
+                    <input type="date" id="deliveryDate" name="deliveryDate" required>
+                    <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                    <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                    <div class="error-message" id="dateError">Please select a valid delivery date (must be tomorrow or later)</div>
+                    <div class="success-message" id="dateSuccess">Delivery date selected!</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="specialInstructions">Special Instructions</label>
+                    <textarea id="specialInstructions" name="specialInstructions" rows="2" placeholder="Any allergies or special requests?"></textarea>
+                </div>
+                
+                <h2 style="margin: 30px 0 15px; font-family: 'Cormorant Garamond';">Payment Method</h2>
+                
+                <div class="payment-methods">
+                    <button type="button" class="payment-tab active" data-method="card" onclick="switchPaymentMethod('card')">
+                        <i class="fas fa-credit-card"></i> Card
+                    </button>
+                    <button type="button" class="payment-tab" data-method="paypal" onclick="switchPaymentMethod('paypal')">
+                        <i class="fab fa-paypal"></i> PayPal
+                    </button>
+                    <button type="button" class="payment-tab" data-method="cash" onclick="switchPaymentMethod('cash')">
+                        <i class="fas fa-money-bill-wave"></i> Cash
+                    </button>
+                </div>
+                
+                <!-- Card Payment Details -->
+                <div id="cardDetails" class="payment-details active">
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number *</label>
+                        <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                        <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                        <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                        <div class="error-message" id="cardError">Please enter a valid 16-digit card number</div>
+                        <div class="success-message" id="cardSuccess">Card number looks good!</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardExpiry">Expiry Date *</label>
+                            <input type="text" id="cardExpiry" name="cardExpiry" placeholder="MM/YY" maxlength="5">
+                            <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                            <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                            <div class="error-message" id="expiryError">Please enter a valid expiry date (MM/YY, future date)</div>
+                            <div class="success-message" id="expirySuccess">Expiry date looks good!</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cardCVC">CVC *</label>
+                            <input type="text" id="cardCVC" name="cardCVC" placeholder="123" maxlength="4">
+                            <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                            <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                            <div class="error-message" id="cvcError">Please enter a valid CVC (3-4 digits)</div>
+                            <div class="success-message" id="cvcSuccess">CVC looks good!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardName">Name on Card *</label>
+                        <input type="text" id="cardName" name="cardName" placeholder="As shown on card">
+                        <span class="validation-icon valid"><i class="fas fa-check-circle"></i></span>
+                        <span class="validation-icon invalid"><i class="fas fa-exclamation-circle"></i></span>
+                        <div class="error-message" id="cardNameError">Please enter a valid name on card (letters and spaces only)</div>
+                        <div class="success-message" id="cardNameSuccess">Card name looks good!</div>
+                    </div>
+                </div>
+                
+                <!-- PayPal Details -->
+                <div id="paypalDetails" class="payment-details">
+                    <div style="text-align: center; padding: 20px; background: #f9f9f9; border-radius: 10px; margin: 15px 0;">
+                        <p>You will be redirected to PayPal to complete your payment after submitting the order.</p>
+                        <div style="margin-top: 15px; font-size: 2rem; color: #003087;">
+                            <i class="fab fa-paypal"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cash on Delivery Details -->
+                <div id="cashDetails" class="payment-details">
+                    <div style="text-align: center; padding: 20px; background: #f9f9f9; border-radius: 10px; margin: 15px 0;">
+                        <p>Pay with cash when your order is delivered. Please have exact change ready.</p>
+                        <div style="margin-top: 15px; font-size: 2rem; color: var(--gold);">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <div style="margin-bottom: 20px; font-size: 0.9rem; color: #666; display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="termsCheck" name="termsCheck" required style="margin-top: 3px;">
+                        <label for="termsCheck" style="flex: 1;">I agree to the <a href="#" id="termsLink" aria-controls="termsModal" style="color: var(--accent-pink); text-decoration: underline;">Terms & Conditions</a></label>
+                        <div class="error-message" id="termsError">You must agree to the terms and conditions</div>
+                    </div>
+                    
+                    <button type="submit" class="btn-action" style="background: var(--dark-choco);">
+                        <span class="spinner"></span>
+                        <span class="btn-text">Place Order</span>
+                    </button>
+                    <a href="index.html" class="back-btn">← Return to shopping</a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="order-summary-section">
+            <h2 style="margin-bottom: 20px; font-family: 'Cormorant Garamond';">Order Summary</h2>
+            <div id="order-items">
+                <!-- Cart items will be populated here -->
+            </div>
+            <div id="order-totals">
+                <!-- Totals will be populated here -->
+            </div>
+            <p style="margin-top: 20px; color: #777; font-size: 0.9rem; text-align: center;">
+                Free delivery for orders over $50
+            </p>
+        </div>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal" id="termsModal" tabindex="-1">
+            <h3>Terms & Conditions</h3>
+            <div class="modal-body">
+                <p><strong>Acceptance of terms:</strong> By placing an order, you agree to the terms and conditions of Sweet Heaven.</p>
+                <p><strong>Orders & Payment:</strong> All orders are subject to availability. Payment must be made in full at checkout.</p>
+                <p><strong>Delivery & Returns:</strong> Delivery times are estimates. Perishable items are non-refundable except in case of error or quality issues.</p>
+                <p><strong>Allergies:</strong> Our products may contain or come into contact with nuts, dairy, gluten and other allergens. Please notify us of any allergies in the special instructions.</p>
+                <p><strong>Data:</strong> We process personal information to complete your order. See our privacy policy for details.</p>
+                <p><em>This is a summary. For full legal terms, contact us or refer to our policies.</em></p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn close" id="termsClose">Close</button>
+                <button class="btn primary" id="termsAgree">Agree & Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+    
+    <script>
+        let bag = JSON.parse(localStorage.getItem('heavenBag')) || [];
+        let currentPaymentMethod = 'card';
+        
+        // Simple country codes data
+        const countryCodes = [
+            { code: '+92', flag: '🇵🇰', name: 'Pakistan', placeholder: '03XX XXXXXXX' },
+            { code: '+1', flag: '🇺🇸', name: 'United States', placeholder: '(XXX) XXX-XXXX' },
+            { code: '+44', flag: '🇬🇧', name: 'United Kingdom', placeholder: '07XXX XXXXXX' },
+            { code: '+91', flag: '🇮🇳', name: 'India', placeholder: '9XXXXXXXXX' },
+            { code: '+971', flag: '🇦🇪', name: 'UAE', placeholder: '05X XXXXXXX' },
+            { code: '+966', flag: '🇸🇦', name: 'Saudi Arabia', placeholder: '05X XXXXXXX' },
+            { code: '+20', flag: '🇪🇬', name: 'Egypt', placeholder: '01X XXXXXXX' },
+            { code: '+27', flag: '🇿🇦', name: 'South Africa', placeholder: '07X XXXXXXX' },
+            { code: '+61', flag: '🇦🇺', name: 'Australia', placeholder: '04XX XXX XXX' },
+            { code: '+49', flag: '🇩🇪', name: 'Germany', placeholder: '015X XXXXXXX' },
+            { code: '+33', flag: '🇫🇷', name: 'France', placeholder: '6X XX XX XX' },
+            { code: '+39', flag: '🇮🇹', name: 'Italy', placeholder: '3XX XXX XXXX' },
+            { code: '+34', flag: '🇪🇸', name: 'Spain', placeholder: '6XX XXX XXX' },
+            { code: '+55', flag: '🇧🇷', name: 'Brazil', placeholder: '11 XXXXX-XXXX' },
+            { code: '+86', flag: '🇨🇳', name: 'China', placeholder: '1XX XXXX XXXX' }
+        ];
+        
+        function loadOrderSummary() {
+            const orderItems = document.getElementById('order-items');
+            const orderTotals = document.getElementById('order-totals');
+            
+            if (bag.length === 0) {
+                orderItems.innerHTML = '<p style="text-align: center; color: #999; padding: 40px 0;">Your bag is empty</p>';
+                orderTotals.innerHTML = '';
+                return;
+            }
+            
+            const subtotal = bag.reduce((a, b) => a + (b.p * b.q), 0);
+            const delivery = subtotal > 50 ? 0 : 5;
+            const total = subtotal + delivery;
+            
+            orderItems.innerHTML = bag.map(item => `
+                <div class="order-item">
+                    <span>${item.n} x ${item.q}</span>
+                    <span>$${item.p * item.q}.00</span>
+                </div>
+            `).join('');
+            
+            orderTotals.innerHTML = `
+                <div class="order-item">
+                    <span>Subtotal</span>
+                    <span>$${subtotal}.00</span>
+                </div>
+                <div class="order-item">
+                    <span>Delivery</span>
+                    <span>${delivery === 0 ? 'FREE' : '$' + delivery + '.00'}</span>
+                </div>
+                <div class="order-total">
+                    <span>Total</span>
+                    <span>$${total}.00</span>
+                </div>
+            `;
+        }
+        
+        function switchPaymentMethod(method) {
+            currentPaymentMethod = method;
+            
+            // Update tabs
+            document.querySelectorAll('.payment-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.method === method) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Update payment details visibility
+            document.querySelectorAll('.payment-details').forEach(details => {
+                details.classList.remove('active');
+                if (details.id === `${method}Details`) {
+                    details.classList.add('active');
+                }
+            });
+        }
+        
+        // Initialize country code dropdown
+        function initCountryCodeDropdown() {
+            const countryCodeSelect = document.getElementById('countryCode');
+            const countryFlag = document.getElementById('countryFlag');
+            const phoneInput = document.getElementById('customerPhone');
+            
+            // Clear existing options
+            countryCodeSelect.innerHTML = '';
+            
+            // Add countries to dropdown
+            countryCodes.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.textContent = `${country.flag} ${country.code} (${country.name})`;
+                option.setAttribute('data-flag', country.flag);
+                option.setAttribute('data-placeholder', country.placeholder);
+                countryCodeSelect.appendChild(option);
+            });
+            
+            // Set default to Pakistan
+            const defaultCountry = countryCodes.find(c => c.code === '+92');
+            if (defaultCountry) {
+                countryCodeSelect.value = defaultCountry.code;
+                countryFlag.textContent = defaultCountry.flag;
+                phoneInput.placeholder = defaultCountry.placeholder;
+            }
+            
+            // Update flag and placeholder when country changes
+            countryCodeSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const flag = selectedOption.getAttribute('data-flag');
+                const placeholder = selectedOption.getAttribute('data-placeholder');
+                
+                countryFlag.textContent = flag;
+                phoneInput.placeholder = placeholder;
+                
+                // Trigger validation when country changes
+                validatePhoneInput();
+            });
+        }
+        
+        // Validation functions
+        function validateName(name) {
+            const nameRegex = /^[A-Za-z\s\-']+$/;
+            return name.length >= 2 && nameRegex.test(name) && !/\d/.test(name);
+        }
+        
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function validatePhoneInput() {
+            const phoneInput = document.getElementById('customerPhone');
+            const value = phoneInput.value.trim();
+            const countryCode = document.getElementById('countryCode').value;
+            
+            // Clean the number (remove non-digits)
+            const cleaned = value.replace(/\D/g, '');
+            
+            // Basic validation based on country code
+            if (countryCode === '+92') { // Pakistan
+                return cleaned.length >= 10 && cleaned.length <= 11;
+            } else if (countryCode === '+1') { // US/Canada
+                return cleaned.length === 10;
+            } else if (countryCode === '+44') { // UK
+                return cleaned.length === 10 || cleaned.length === 11;
+            } else {
+                // Generic validation for other countries
+                return cleaned.length >= 8 && cleaned.length <= 15;
+            }
+        }
+        
+        function validateAddress(address) {
+            return address.trim().length >= 10;
+        }
+        
+        function validateCardNumber(cardNumber) {
+            const digitsOnly = cardNumber.replace(/\s/g, '');
+            return digitsOnly.length === 16 && /^\d+$/.test(digitsOnly);
+        }
+        
+        function validateExpiryDate(expiryDate) {
+            const expiryRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+            if (!expiryRegex.test(expiryDate)) return false;
+            
+            const [month, year] = expiryDate.split('/');
+            const currentYear = new Date().getFullYear() % 100;
+            const currentMonth = new Date().getMonth() + 1;
+            
+            return parseInt(year) > currentYear || 
+                  (parseInt(year) === currentYear && parseInt(month) >= currentMonth);
+        }
+        
+        function validateCVC(cvc) {
+            return /^\d{3,4}$/.test(cvc);
+        }
+        
+        function validateDate(date) {
+            const selectedDate = new Date(date);
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            return selectedDate >= tomorrow;
+        }
+        
+        // Real-time validation setup
+        function setupRealTimeValidation() {
+            // Customer Name validation
+            const nameInput = document.getElementById('customerName');
+            nameInput.addEventListener('input', function(e) {
+                let value = e.target.value;
+                // Prevent numbers and special characters in real-time
+                value = value.replace(/[^A-Za-z\s\-']/g, '');
+                e.target.value = value;
+                
+                const isValid = validateName(value);
+                updateValidationState('customerName', isValid, 'Please enter a valid full name (letters and spaces only)');
+            });
+            
+            // Card Name validation
+            const cardNameInput = document.getElementById('cardName');
+            cardNameInput.addEventListener('input', function(e) {
+                let value = e.target.value;
+                // Prevent numbers and special characters in real-time
+                value = value.replace(/[^A-Za-z\s\-']/g, '');
+                e.target.value = value;
+                
+                const isValid = validateName(value);
+                updateValidationState('cardName', isValid, 'Please enter a valid name on card (letters and spaces only)');
+            });
+            
+            // Email validation
+            const emailInput = document.getElementById('customerEmail');
+            emailInput.addEventListener('input', function(e) {
+                const isValid = validateEmail(e.target.value);
+                updateValidationState('customerEmail', isValid, 'Please enter a valid email address');
+            });
+            
+            // Phone validation
+            const phoneInput = document.getElementById('customerPhone');
+            phoneInput.addEventListener('input', function(e) {
+                // Allow only numbers and common phone characters
+                let value = e.target.value;
+                value = value.replace(/[^\d\s\-\+\(\)]/g, '');
+                e.target.value = value;
+                
+                const isValid = validatePhoneInput();
+                updateValidationState('customerPhone', isValid, 'Please enter a valid phone number');
+            });
+            
+            // Address validation
+            const addressInput = document.getElementById('deliveryAddress');
+            addressInput.addEventListener('input', function(e) {
+                const isValid = validateAddress(e.target.value);
+                updateValidationState('deliveryAddress', isValid, 'Please enter a complete delivery address (minimum 10 characters)');
+            });
+            
+            // Date validation
+            const dateInput = document.getElementById('deliveryDate');
+            dateInput.addEventListener('change', function(e) {
+                const isValid = validateDate(e.target.value);
+                updateValidationState('deliveryDate', isValid, 'Please select a valid delivery date (must be tomorrow or later)');
+            });
+            
+            // Card Number validation with formatting
+            const cardNumberInput = document.getElementById('cardNumber');
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let formatted = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
+                    formatted += value[i];
+                }
+                e.target.value = formatted.substring(0, 19);
+                
+                const isValid = validateCardNumber(e.target.value);
+                updateValidationState('cardNumber', isValid, 'Please enter a valid 16-digit card number');
+            });
+            
+            // Expiry date validation with formatting
+            const expiryInput = document.getElementById('cardExpiry');
+            expiryInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                if (value.length >= 2) {
+                    e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                } else {
+                    e.target.value = value;
+                }
+                
+                const isValid = validateExpiryDate(e.target.value);
+                updateValidationState('cardExpiry', isValid, 'Please enter a valid expiry date (MM/YY, future date)');
+            });
+            
+            // CVC validation
+            const cvcInput = document.getElementById('cardCVC');
+            cvcInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/[^0-9]/gi, '');
+                const isValid = validateCVC(e.target.value);
+                updateValidationState('cardCVC', isValid, 'Please enter a valid CVC (3-4 digits)');
+            });
+            
+            // Terms checkbox validation
+            const termsCheck = document.getElementById('termsCheck');
+            termsCheck.addEventListener('change', function(e) {
+                const errorElement = document.getElementById('termsError');
+                if (!e.target.checked) {
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            });
+        }
+        
+        function updateValidationState(fieldId, isValid, errorMessage) {
+            const field = document.getElementById(fieldId);
+            const errorElement = document.getElementById(fieldId + 'Error');
+            const successElement = document.getElementById(fieldId + 'Success');
+            const formGroup = field.closest('.form-group');
+            
+            if (field.value.trim() === '') {
+                formGroup.classList.remove('valid', 'invalid');
+                if (errorElement) errorElement.style.display = 'none';
+                if (successElement) successElement.style.display = 'none';
+                return;
+            }
+            
+            if (isValid) {
+                formGroup.classList.add('valid');
+                formGroup.classList.remove('invalid');
+                if (errorElement) errorElement.style.display = 'none';
+                if (successElement) successElement.style.display = 'block';
+            } else {
+                formGroup.classList.add('invalid');
+                formGroup.classList.remove('valid');
+                if (errorElement) {
+                    errorElement.textContent = errorMessage;
+                    errorElement.style.display = 'block';
+                }
+                if (successElement) successElement.style.display = 'none';
+            }
+        }
+        
+        function hideAllErrors() {
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.style.display = 'none';
+            });
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('invalid');
+            });
+        }
+        
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            errorElement.parentElement.classList.add('invalid');
+            return false;
+        }
+        
+        function validateForm() {
+            hideAllErrors();
+            let isValid = true;
+            
+            // Name validation
+            const name = document.getElementById('customerName').value.trim();
+            if (!validateName(name)) {
+                showError('nameError', 'Please enter a valid full name (letters and spaces only, minimum 2 characters)');
+                isValid = false;
+            }
+            
+            // Email validation
+            const email = document.getElementById('customerEmail').value.trim();
+            if (!validateEmail(email)) {
+                showError('emailError', 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Phone validation
+            if (!validatePhoneInput()) {
+                showError('phoneError', 'Please enter a valid phone number for the selected country');
+                isValid = false;
+            }
+            
+            // Address validation
+            const address = document.getElementById('deliveryAddress').value.trim();
+            if (!validateAddress(address)) {
+                showError('addressError', 'Please enter a complete delivery address (minimum 10 characters)');
+                isValid = false;
+            }
+            
+            // Delivery date validation
+            const deliveryDate = document.getElementById('deliveryDate').value;
+            if (!validateDate(deliveryDate)) {
+                showError('dateError', 'Please select a valid delivery date (must be tomorrow or later)');
+                isValid = false;
+            }
+            
+            // Payment method specific validation
+            if (currentPaymentMethod === 'card') {
+                const cardNumber = document.getElementById('cardNumber').value;
+                if (!validateCardNumber(cardNumber)) {
+                    showError('cardError', 'Please enter a valid 16-digit card number');
+                    isValid = false;
+                }
+                
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                if (!validateExpiryDate(cardExpiry)) {
+                    showError('expiryError', 'Please enter a valid expiry date (MM/YY, future date)');
+                    isValid = false;
+                }
+                
+                const cardCVC = document.getElementById('cardCVC').value;
+                if (!validateCVC(cardCVC)) {
+                    showError('cvcError', 'Please enter a valid CVC (3-4 digits)');
+                    isValid = false;
+                }
+                
+                const cardName = document.getElementById('cardName').value.trim();
+                if (!validateName(cardName)) {
+                    showError('cardNameError', 'Please enter a valid name on card (letters and spaces only)');
+                    isValid = false;
+                }
+            }
+            
+            // Terms validation
+            if (!document.getElementById('termsCheck').checked) {
+                showError('termsError', 'You must agree to the terms and conditions');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            
+            if (type === 'error') {
+                toast.style.background = '#ff4757';
+            } else if (type === 'warning') {
+                toast.style.background = '#ffa502';
+            } else {
+                toast.style.background = 'var(--dark-choco)';
+            }
+            
+            toast.style.display = 'block';
+            setTimeout(() => { 
+                toast.style.display = 'none'; 
+            }, 3000);
+        }
+        
+        function processOrder() {
+            if (bag.length === 0) {
+                showToast('Your bag is empty. Please add items before checking out.', 'error');
+                return;
+            }
+            
+            if (!validateForm()) {
+                showToast('Please fix the errors in the form', 'error');
+                // Scroll to first error
+                const firstError = document.querySelector('.invalid');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+            
+            // Show loading spinner
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const spinner = submitBtn.querySelector('.spinner');
+            const btnText = submitBtn.querySelector('.btn-text');
+            
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Processing...';
+            submitBtn.disabled = true;
+            
+            // Collect order data
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('customerPhone').value.trim();
+            const fullPhone = countryCode + ' ' + phoneNumber;
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                const orderData = {
+                    orderId: 'SH-' + Date.now().toString().slice(-8),
+                    date: new Date().toLocaleDateString('en-US'),
+                    customerName: document.getElementById('customerName').value.trim(),
+                    customerEmail: document.getElementById('customerEmail').value.trim(),
+                    customerPhone: fullPhone,
+                    deliveryAddress: document.getElementById('deliveryAddress').value.trim(),
+                    deliveryDate: document.getElementById('deliveryDate').value,
+                    paymentMethod: currentPaymentMethod,
+                    items: bag,
+                    total: bag.reduce((a, b) => a + (b.p * b.q), 0) + (bag.reduce((a, b) => a + (b.p * b.q), 0) > 50 ? 0 : 5)
+                };
+                
+                // Save order to localStorage
+                localStorage.setItem('lastOrder', JSON.stringify(orderData));
+                
+                // Clear the bag
+                bag = [];
+                localStorage.setItem('heavenBag', JSON.stringify(bag));
+                
+                // Reset button
+                spinner.style.display = 'none';
+                btnText.textContent = 'Place Order';
+                submitBtn.disabled = false;
+                
+                // Show success message
+                showToast('Order placed successfully! Redirecting...');
+                
+                // Redirect to confirmation page
+                setTimeout(() => {
+                    window.location.href = "order-confirmation.html";
+                }, 2000);
+            }, 1500);
+        }
+        
+        // Terms modal functions
+        function openTermsModal() {
+            const overlay = document.getElementById('termsModalOverlay');
+            if (!overlay) return;
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            // focus the modal for accessibility
+            document.getElementById('termsModal').focus();
+        }
+        function closeTermsModal() {
+            const overlay = document.getElementById('termsModalOverlay');
+            if (!overlay) return;
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            // return focus to the link
+            const link = document.getElementById('termsLink');
+            if (link) link.focus();
+        }
+        // Close modal when clicking outside content
+        document.addEventListener('click', function(e) {
+            const overlay = document.getElementById('termsModalOverlay');
+            if (overlay && overlay.classList.contains('active') && e.target === overlay) {
+                closeTermsModal();
+            }
+        });
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('termsModalOverlay');
+                if (overlay && overlay.classList.contains('active')) {
+                    closeTermsModal();
+                }
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize country code dropdown
+            initCountryCodeDropdown();
+            
+            // Set minimum date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('deliveryDate').min = tomorrow.toISOString().split('T')[0];
+            
+            // Set default delivery date to 2 days from now
+            const defaultDate = new Date();
+            defaultDate.setDate(defaultDate.getDate() + 2);
+            document.getElementById('deliveryDate').value = defaultDate.toISOString().split('T')[0];
+            
+            // Setup real-time validation
+            setupRealTimeValidation();
+            
+            // Load order summary
+            loadOrderSummary();
+            
+            // Form submission
+            document.getElementById('paymentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                processOrder();
+            });
+
+            // Terms modal: open/close and agree actions
+            const termsLink = document.getElementById('termsLink');
+            if (termsLink) {
+                termsLink.addEventListener('click', function(e) { e.preventDefault(); openTermsModal(); });
+            }
+            const termsClose = document.getElementById('termsClose');
+            if (termsClose) termsClose.addEventListener('click', closeTermsModal);
+            const termsAgree = document.getElementById('termsAgree');
+            if (termsAgree) {
+                termsAgree.addEventListener('click', function() {
+                    const termsCheck = document.getElementById('termsCheck');
+                    if (termsCheck) termsCheck.checked = true;
+                    const termsError = document.getElementById('termsError');
+                    if (termsError) termsError.style.display = 'none';
+                    closeTermsModal();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
