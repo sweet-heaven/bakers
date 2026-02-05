@@ -18,4 +18,4 @@ Sweet Heaven - Artisanal Patisserie &amp; Bespoke Lab Website A fully responsive
 ## Local Development
 1. Clone repository:
    ```bash
-   git clone https://github.com/yourusername/yourusername.github.io.git
+   git clone https://sweet-heaven.github.io/bakers/
